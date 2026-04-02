@@ -16,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TheWeatherApp">
         <activity
+            android:name=".ui.dashboard.DashboardActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".ui.locationPermission.LocationPermissionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.unitSetting.UnitSettingActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
