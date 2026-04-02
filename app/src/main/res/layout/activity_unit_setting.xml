@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_background">
+
+    <!-- TITLE -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Unit Settings"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ICON -->
+    <ImageView
+        android:id="@+id/ivCloud"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/baseline_wb_cloudy_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <!-- DESCRIPTION -->
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:alpha="0.8"
+        android:gravity="center"
+        android:paddingHorizontal="24dp"
+        android:text="We want to ensure you have the best experience while using our app. Please choose your preference"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivCloud" />
+
+    <!-- CONTENT -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/btnDone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDesc">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ========= ROW TEMPLATE ========= -->
+
+            <!-- Temperature -->
+            <LinearLayout
+                style="@style/RowStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/RowLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Temperature" />
+
+                <com.google.android.material.chip.ChipGroup
+                    style="@style/RowChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.App.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="°C" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.App.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="°F" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
+            <View style="@style/Divider" />
+
+            <!-- Time -->
+            <LinearLayout
+                style="@style/RowStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/RowLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Time Format" />
+
+                <com.google.android.material.chip.ChipGroup
+                    style="@style/RowChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.App.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12h" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.App.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24h" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
+            <View style="@style/Divider" />
+
+            <!-- Precipitation -->
+            <LinearLayout
+                style="@style/RowStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/RowLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Precipitation" />
+
+                <com.google.android.material.chip.ChipGroup
+                    style="@style/RowChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.App.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="mm" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.App.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="in" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
+            <View style="@style/Divider" />
+
+            <!-- Distance -->
+            <LinearLayout
+                style="@style/RowStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/RowLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Distance" />
+
+                <com.google.android.material.chip.ChipGroup
+                    style="@style/RowChipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.App.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="km" />
+
+                    <com.google.android.material.chip.Chip
+                        style="@style/Widget.App.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="mi" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
+            <View style="@style/Divider" />
+
+            <!-- Wind -->
+            <TextView
+                style="@style/RowLabel"
+                android:layout_marginTop="10dp"
+                android:text="Wind Speed" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipWind"
+                style="@style/MultiChipGroup"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="m/s" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="km/h" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mi/h" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Knot" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Beaufort" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <View style="@style/Divider" />
+
+            <!-- Pressure -->
+            <TextView
+                style="@style/RowLabel"
+                android:layout_marginTop="10dp"
+                android:text="Pressure" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipPressure"
+                style="@style/MultiChipGroup"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mmHg" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hPa" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="atm" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mBar" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="inHg" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.App.Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="kPa" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <View style="@style/Divider" />
+
+            <!-- Notification -->
+            <LinearLayout
+                style="@style/RowStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/RowLabel"
+                        android:text="Ongoing Notification" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.6"
+                        android:text="Display the temperature or weather condition in the status bar"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchNotif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- DONE -->
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/accent"
+        android:text="DONE"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
