@@ -25,4 +25,13 @@
 <color name="bg_bottom">#0F2027</color>
 <color name="chip_bg">#0A0A0A</color>
 <color name="accent">#2D8CFF</color>
+
+    <color name="weather_bg_dark">#1A2340</color>
+    <color name="drawer_bg">#1E2A45</color>
+    <color name="premium_card_bg">#243055</color>
+    <color name="accent_orange">#F5A623</color>
+    <color name="light_blue">#4FC3F7</color>
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="white_30">#4DFFFFFF</color>
+    <color name="warning_banner_bg">#4D5C2B</color>
 </resources>

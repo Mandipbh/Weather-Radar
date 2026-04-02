@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_etting"
+            android:icon="@drawable/ic_setting"
+            android:title="SETTINGS" />
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/nav_manage_location"
+            android:icon="@drawable/ic_location"
+            android:title="Manage location" />
+
+        <item
+            android:id="@+id/nav_unit_preference"
+            android:icon="@drawable/ic_setting"
+            android:title="Unit Preference Setting" />
+
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_notification"
+            android:title="Notification Settings" />
+
+        <item
+            android:id="@+id/nav_radar"
+            android:icon="@drawable/ic_radar"
+            android:title="Radar" />
+
+        <item
+            android:id="@+id/nav_pro"
+            android:icon="@drawable/ic_star"
+            android:title="Get PRO Version" />
+
+        <item
+            android:id="@+id/nav_customise"
+            android:icon="@drawable/ic_customise"
+            android:title="Customise" />
+
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/ic_language"
+            android:title="Language" />
+
+        <item
+            android:title="DEVELOPER"
+            android:enabled="false"
+            android:id="@+id/nav_developer_header" />
+    </group>
+</menu>
