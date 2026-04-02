@@ -66,6 +66,9 @@ dependencies {
     // Glide
     implementation(libs.glide)
 
+    // AppLovin
+    implementation(libs.applovin.sdk)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

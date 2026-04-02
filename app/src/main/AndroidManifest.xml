@@ -15,6 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheWeatherApp">
+
+        <!-- AppLovin SDK Key -->
+        <meta-data android:name="applovin.sdk.key"
+            android:value="YOUR_SDK_KEY_HERE"/>
+
         <activity
             android:name=".ui.dashboard.DashboardActivity"
             android:exported="false"/>

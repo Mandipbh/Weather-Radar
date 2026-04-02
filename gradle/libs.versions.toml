@@ -17,6 +17,7 @@ coroutines = "1.9.0"
 glide = "4.16.0"
 ksp = "2.0.21-1.0.26"
 playServicesAds = "23.6.0"
+applovin = "13.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,6 +38,7 @@ androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecy
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
+applovin-sdk = { group = "com.applovin", name = "applovin-sdk", version.ref = "applovin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
