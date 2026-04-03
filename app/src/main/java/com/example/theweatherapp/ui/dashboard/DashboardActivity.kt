@@ -211,21 +211,23 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun processAddress(address: android.location.Address) {
-        // Try to get the most specific name first
-        val name = address.subLocality ?: address.featureName ?: address.locality ?: ""
-        val state = address.adminArea ?: ""
+        // Line 1: SubLocality or FeatureName
+        val line1 = address.subLocality ?: address.featureName ?: ""
         
-        val displayLocation = if (name.isNotEmpty() && state.isNotEmpty()) {
-            "$name, $state"
-        } else if (name.isNotEmpty()) {
-            name
-        } else {
-            state
-        }
+        // Line 2: Locality, PostalCode, AdminArea, Country
+        val parts = mutableListOf<String>()
+        address.locality?.let { parts.add(it) }
+        address.postalCode?.let { parts.add(it) }
+        address.adminArea?.let { parts.add(it) }
+        address.countryName?.let { parts.add(it) }
+        
+        val line2 = parts.joinToString(", ")
 
-        Log.d("DashboardActivity", "Resolved Exact Location Name: $displayLocation")
+        val fullAddress = if (line1.isNotEmpty()) "$line1|$line2" else line2
+
+        Log.d("DashboardActivity", "Resolved Address: $fullAddress")
         runOnUiThread {
-            weatherViewModel.setAddress(displayLocation)
+            weatherViewModel.setAddress(fullAddress)
         }
     }
 

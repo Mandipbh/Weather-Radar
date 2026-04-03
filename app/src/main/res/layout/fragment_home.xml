@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_unit_settings"
@@ -42,7 +42,7 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:text="Lot 478, Block B2 Block B 2 Phase 1"
+                        android:text="Detecting Location..."
                         android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -54,7 +54,7 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:text="Johar Town, Lahore, 54600, Pakistan"
+                        android:text=""
                         android:textColor="#8000E5FF"
                         android:textSize="10sp" />
                 </LinearLayout>
@@ -176,7 +176,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="14dp"
                         android:paddingBottom="5dp"
-                        android:text="OVERCAST CLOUDS"
+                        android:text="--"
                         android:textColor="#00E5FF"
                         android:textSize="11sp"
                         android:textStyle="bold" />
@@ -192,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
                             android:letterSpacing="-0.03"
-                            android:text="17"
+                            android:text="--"
                             android:textColor="#FFFFFF"
                             android:textSize="92sp"
                             android:textStyle="bold"
@@ -250,7 +250,7 @@
                             android:paddingTop="5dp"
                             android:paddingEnd="12dp"
                             android:paddingBottom="5dp"
-                            android:text="14°C / 22°C"
+                            android:text="--°C / --°C"
                             android:textColor="#DDFFFFFF"
                             android:textSize="13sp"
                             android:textStyle="bold" />
@@ -289,7 +289,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="14dp"
-                        android:text="Real Feel 16°C"
+                        android:text="Real Feel --°C"
                         android:textColor="#80FFFFFF"
                         android:textSize="13sp" />
 
@@ -358,7 +358,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="2:07am · Thu, 19 March 2026"
+                            android:text="--:-- · ---, -- ----- ----"
                             android:textColor="#60FFFFFF"
                             android:textSize="11sp" />
 
@@ -497,12 +497,13 @@
                         android:id="@+id/rv_hourly"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
+                        android:nestedScrollingEnabled="false"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </LinearLayout>
 
             </RelativeLayout>
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

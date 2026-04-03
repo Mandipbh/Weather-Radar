@@ -7,15 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.theweatherapp.data.api.WeatherResponse
 import com.example.theweatherapp.databinding.FragmentHomeBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import com.example.theweatherapp.ui.dashboard.DashboardActivity
+import com.example.theweatherapp.ui.dashboard.home.model.HourlyData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -41,6 +45,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView()
         setupSwipeRefresh()
 
         // Observe weather data from the shared ViewModel
@@ -50,13 +55,31 @@ class HomeFragment : Fragment() {
 
         // Observe address updates
         weatherViewModel.currentAddress.observe(viewLifecycleOwner) { address ->
-            binding.tvLocation.text = address ?: "Unknown Location"
+            if (address != null) {
+                val parts = address.split("|")
+                binding.tvLocation.text = parts[0]
+                if (parts.size > 1) {
+                    binding.tvLocationLine2.text = parts[1]
+                    binding.tvLocationLine2.visibility = View.VISIBLE
+                } else {
+                    binding.tvLocationLine2.visibility = View.GONE
+                }
+            } else {
+                binding.tvLocation.text = "Detecting Location..."
+                binding.tvLocationLine2.text = ""
+            }
         }
 
         // Observe loading state
         weatherViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.swipeRefreshLayout.isRefreshing = isLoading
         }
+    }
+
+    private fun setupRecyclerView() {
+        // Changed to Vertical as per request
+        binding.rvHourly.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvHourly.isNestedScrollingEnabled = false
     }
 
     override fun onResume() {
@@ -105,7 +128,7 @@ class HomeFragment : Fragment() {
 
     private fun updateUI(weather: WeatherResponse) {
         // Main weather info
-        binding.tvCondition.text = weather.current.condition.text
+        binding.tvCondition.text = weather.current.condition.text.uppercase()
         binding.tvTemperature.text = weather.current.tempC.toInt().toString()
         
         // Min/Max and Rain
@@ -113,6 +136,9 @@ class HomeFragment : Fragment() {
         if (forecastDay != null) {
             binding.tvMinMax.text = "${forecastDay.day.minTempC.toInt()}°C / ${forecastDay.day.maxTempC.toInt()}°C"
             binding.tvRainChance.text = "${forecastDay.day.dailyChanceOfRain}%"
+            
+            // Update Hourly Forecast
+            updateHourlyForecast(forecastDay.hour, weather.location.localtime)
         }
 
         // Real Feel
@@ -120,6 +146,43 @@ class HomeFragment : Fragment() {
         
         // Current Time from API
         binding.tvCurrentTime.text = weather.location.localtime
+    }
+
+    private fun updateHourlyForecast(hours: List<com.example.theweatherapp.data.api.Hour>, localTime: String) {
+        val hourlyList = mutableListOf<HourlyData>()
+        
+        // Parse current hour to identify "Now"
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+        val currentHourStr = try {
+            val date = sdf.parse(localTime)
+            SimpleDateFormat("HH", Locale.getDefault()).format(date!!)
+        } catch (e: Exception) {
+            ""
+        }
+
+        hours.forEach { hour ->
+            val hourOfDay = hour.time.split(" ").last() // e.g., "2024-03-19 13:00" -> "13:00"
+            val hourOnly = hourOfDay.split(":").first()
+            
+            val displayTime = if (hourOnly == currentHourStr) "Now" else hourOfDay
+            
+            hourlyList.add(
+                HourlyData(
+                    time = displayTime,
+                    tempC = hour.tempC.toInt(),
+                    rainPercent = hour.chanceOfRain,
+                    iconType = hour.condition.text.lowercase()
+                )
+            )
+        }
+
+        // Filter to only show current and future hours for today
+        val filteredList = hourlyList.filterIndexed { index, hourlyData ->
+            val hourOnly = hours[index].time.split(" ").last().split(":").first()
+            hourOnly >= currentHourStr || hourlyData.time == "Now"
+        }
+
+        binding.rvHourly.adapter = HourlyForecastAdapter(filteredList)
     }
 
     override fun onDestroyView() {
