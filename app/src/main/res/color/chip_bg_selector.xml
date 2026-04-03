@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Selected: dark navy with cyan tint (alpha=26 = 10% opacity cyan) -->
+    <item android:state_checked="true" android:color="#1A00E5FF" />
+    <!-- Pressed -->
+    <item android:state_pressed="true" android:color="#2500E5FF" />
+    <!-- Default: dark semi-transparent navy -->
+    <!-- #1A = 10% alpha, #0D1B3E is dark navy -->
+    <item android:color="#330D1B3E" />
+</selector>

@@ -39,13 +39,25 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/ivCloud"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/cloud" />
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="10dp">
 
+            <View
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bg_weather_icon_circle" />
+
+            <ImageView
+                android:id="@+id/iv_weather_icon"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_cloudy" />
+
+        </FrameLayout>
         <TextView
             android:id="@+id/tvDesc2"
             android:layout_width="match_parent"

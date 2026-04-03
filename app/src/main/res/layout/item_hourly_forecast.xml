@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="60dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/bg_hourly_card"
+    android:padding="8dp"
+    android:layout_marginEnd="8dp">
+
+    <TextView
+        android:id="@+id/tv_hour_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Now"
+        android:textColor="#80FFFFFF"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="6dp" />
+
+    <ImageView
+        android:id="@+id/iv_hour_icon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ic_cloudy"
+        android:layout_marginBottom="6dp" />
+
+    <TextView
+        android:id="@+id/tv_hour_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="17°"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="2dp" />
+
+    <TextView
+        android:id="@+id/tv_hour_rain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0%"
+        android:textColor="#4FC3F7"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
