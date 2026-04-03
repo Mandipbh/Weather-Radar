@@ -4,9 +4,12 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WeatherApi {
-    @GET("weather")
-    suspend fun getCurrentWeather(
-        @Query("q") city: String,
-        @Query("appid") apiKey: String
-    ): Any // Replace Any with DTO model later
+    @GET("forecast.json")
+    suspend fun getForecast(
+        @Query("q") query: String,
+        @Query("key") apiKey: String,
+        @Query("days") days: Int = 1,
+        @Query("aqi") aqi: String = "yes",
+        @Query("alerts") alerts: String = "yes"
+    ): WeatherResponse
 }
