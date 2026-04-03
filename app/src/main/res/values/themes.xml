@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TheWeatherApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimary">@color/accent</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:windowBackground">@color/bg_light</item>
         <item name="colorPrimaryVariant">@color/primary_dark_blue</item>
@@ -35,69 +35,63 @@
     </style>
 
 
-    <style name="Widget.App.Chip" parent="Widget.Material3.Chip.Filter">
-
-        <!-- Size -->
-        <item name="chipMinHeight">36dp</item>
-        <item name="chipMinTouchTargetSize">36dp</item>
-
-        <!-- Background -->
-        <item name="chipBackgroundColor">@color/black</item>
-
-        <!-- Border -->
-        <item name="chipStrokeWidth">2dp</item>
-        <item name="chipStrokeColor">@color/accent</item>
-
-        <!-- Text -->
+    <style name="Widget.App.Chip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="android:textColor">@color/chip_text_selector</item>
-
-        <!-- Shape -->
-        <item name="shapeAppearance">@style/ShapeAppearance.App.Chip</item>
-
-        <!-- Behavior -->
+        <item name="chipBackgroundColor">@color/chip_bg_selector</item>
+        <item name="chipSurfaceColor">#00000000</item>
+        <item name="chipStrokeColor">@color/chip_stroke_selector</item>
+        <item name="chipStrokeWidth">1.5dp</item>
+        <item name="chipCornerRadius">20dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="chipMinHeight">36dp</item>
+        <item name="chipStartPadding">12dp</item>
+        <item name="chipEndPadding">12dp</item>
         <item name="checkedIconVisible">false</item>
-
+        <item name="rippleColor">#2000E5FF</item>
+        <item name="chipIconVisible">false</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+        <!-- Elevation shadow for selected -->
+        <item name="android:elevation">2dp</item>
     </style>
 
-    <style name="ShapeAppearance.App.Chip" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">12dp</item>
-    </style>
-
-    <style name="RowStyle">
+    <!-- ===== CARD DIVIDER (inside glass cards) ===== -->
+    <style name="CardDivider">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">#15FFFFFF</item>
+        <item name="android:layout_marginStart">14dp</item>
+        <item name="android:layout_marginEnd">14dp</item>
+    </style>
+
+    <!-- ===== OLD STYLES (keep for compatibility) ===== -->
+    <style name="RowStyle">
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
     </style>
 
     <style name="RowLabel">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="RowChipGroup">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="singleSelection">true</item>
-        <item name="selectionRequired">true</item>
-        <item name="chipSpacingHorizontal">8dp</item>
+        <!-- kept for old layout compat -->
     </style>
 
     <style name="MultiChipGroup">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="singleSelection">true</item>
-        <item name="chipSpacing">8dp</item>
     </style>
 
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@drawable/divider</item>
-        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:background">#20FFFFFF</item>
     </style>
 </resources>
