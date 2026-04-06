@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Weather Radar</string>
-    <string name="mapbox_access_token">pk.eyJ1IjoibGlvbGFuIiwiYSI6ImNtbmhhem00MzAwbzcycXF1MzQ5Ym9ueHkifQ.rqhF9pYINCYaOJqIZhYiMA</string>
+    <string name="mapbox_access_token"><!--pk.eyJ1IjoibGlvbGFuIiwiYSI6ImNtbmhhem00MzAwbzcycXF1MzQ5Ym9ueHkifQ.rqhF9pYINCYaOJqIZhYiMA--></string>
 </resources>
