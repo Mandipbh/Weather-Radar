@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="80dp"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:background="@drawable/bg_hourly_card"
-    android:padding="12dp"
-    android:layout_marginBottom="8dp">
+    android:padding="15dp"
+    android:layout_marginEnd="8dp">
 
     <TextView
         android:id="@+id/tv_hour_time"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Now"
         android:textColor="#FFFFFF"
@@ -22,15 +22,13 @@
         android:id="@+id/iv_hour_icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/ic_cloudy"
-        android:layout_marginStart="16dp" />
+        android:src="@drawable/ic_cloudy" />
 
     <TextView
         android:id="@+id/tv_hour_rain"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="16dp"
         android:text="0%"
         android:textColor="#4FC3F7"
         android:textSize="12sp"

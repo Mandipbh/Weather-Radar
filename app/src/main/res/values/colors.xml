@@ -37,4 +37,6 @@
     <color name="accent">#00E5FF</color>
     <color name="unit_bg_start">#0D1B3E</color>
     <color name="unit_bg_end">#0A1628</color>
+    <color name="counter_text">#40FFFFFF</color>
+    <color name="counter_overflow">#FF6B6B</color>
 </resources>

@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         // Changed to Vertical as per request
-        binding.rvHourly.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvHourly.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvHourly.isNestedScrollingEnabled = false
     }
 

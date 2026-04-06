@@ -29,6 +29,7 @@ class LocationPermissionActivity : AppCompatActivity() {
         binding.btnEnableLocation.setOnClickListener {
             val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }

@@ -94,4 +94,28 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">#20FFFFFF</item>
     </style>
+
+    <style name="Widget.App.TextInputLayout"
+        parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <!-- Box background: dark glass -->
+        <item name="boxBackgroundColor">#0AFFFFFF</item>
+
+        <!-- Unfocused border: dim white -->
+        <item name="boxStrokeColor">@color/textfield_stroke_selector</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1.5dp</item>
+
+        <!-- Hint text -->
+        <item name="hintTextColor">@color/textfield_hint_selector</item>
+        <item name="android:textColorHint">#50FFFFFF</item>
+
+        <!-- Counter text (0/80) -->
+        <item name="counterTextColor">@color/counter_text</item>
+        <item name="counterOverflowTextColor">@color/counter_overflow</item>
+
+        <!-- Error -->
+        <item name="errorTextColor">@color/counter_overflow</item>
+        <item name="errorIconDrawable">@null</item>
+    </style>
 </resources>

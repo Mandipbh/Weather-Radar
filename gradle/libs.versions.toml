@@ -21,6 +21,7 @@ playServicesAds = "23.6.0"
 applovin = "13.0.1"
 playServicesLocation = "21.3.0"
 swiperefreshlayout = "1.1.0"
+legacySupportV4 = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,6 +47,7 @@ glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "gl
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
 applovin-sdk = { group = "com.applovin", name = "applovin-sdk", version.ref = "applovin" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

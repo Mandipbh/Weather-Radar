@@ -25,6 +25,8 @@ import androidx.core.view.GravityCompat
 import com.example.theweatherapp.R
 import com.example.theweatherapp.databinding.ActivityDashboardBinding
 import com.example.theweatherapp.ui.WeatherViewModel
+import com.example.theweatherapp.ui.dashboard.home.HomeFragment
+import com.example.theweatherapp.ui.dashboard.language.LanguageFragment
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.CancellationTokenSource
@@ -74,6 +76,12 @@ class DashboardActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment_content_dashboard, HomeFragment())
+                .commit()
+        }
+
         val drawerLayout = binding.drawerLayout
         val openDrawerBtn = findViewById<ImageButton>(R.id.btn_open_drawer)
 
@@ -81,9 +89,37 @@ class DashboardActivity : AppCompatActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_home -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.nav_host_fragment_content_dashboard, HomeFragment())
+                        .commit()
+                }
+                R.id.nav_language -> {
+                    openLanguageFragment()
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
+
         checkLocationPermissions()
     }
 
+    private fun openLanguageFragment() {
+        val fragment = LanguageFragment()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_right
+            )
+            .replace(R.id.nav_host_fragment_content_dashboard, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
     private fun checkLocationPermissions() {
         val fineLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val coarseLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
