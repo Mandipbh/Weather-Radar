@@ -164,4 +164,14 @@
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SETTINGS"
+        android:textColor="@color/accent_orange"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="10dp"/>
+
 </LinearLayout>

@@ -20,8 +20,9 @@
 
     <ImageView
         android:id="@+id/iv_hour_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:padding="5dp"
         android:src="@drawable/ic_cloudy" />
 
     <TextView

@@ -25,6 +25,7 @@ import androidx.core.view.GravityCompat
 import com.example.theweatherapp.R
 import com.example.theweatherapp.databinding.ActivityDashboardBinding
 import com.example.theweatherapp.ui.WeatherViewModel
+import com.example.theweatherapp.ui.dashboard.feedback.FeedbackFragment
 import com.example.theweatherapp.ui.dashboard.home.HomeFragment
 import com.example.theweatherapp.ui.dashboard.language.LanguageFragment
 import com.google.android.gms.common.api.ResolvableApiException
@@ -93,11 +94,20 @@ class DashboardActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                            R.anim.slide_in_right,
+                            R.anim.fade_out,
+                            R.anim.fade_in,
+                            R.anim.slide_out_right
+                        )
                         .replace(R.id.nav_host_fragment_content_dashboard, HomeFragment())
                         .commit()
                 }
                 R.id.nav_language -> {
                     openLanguageFragment()
+                }
+                R.id.nav_feedback -> {
+                    openFeedbackFragment()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -109,6 +119,20 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun openLanguageFragment() {
         val fragment = LanguageFragment()
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_right
+            )
+            .replace(R.id.nav_host_fragment_content_dashboard, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun openFeedbackFragment() {
+        val fragment = FeedbackFragment()
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(
                 R.anim.slide_in_right,

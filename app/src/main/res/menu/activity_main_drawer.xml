@@ -6,11 +6,6 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_etting"
-            android:icon="@drawable/ic_setting"
-            android:title="SETTINGS" />
-
-        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="Home" />
@@ -49,6 +44,11 @@
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_language"
             android:title="Language" />
+
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_feedback"
+            android:title="Feedback &amp; Suggestions" />
 
         <item
             android:title="DEVELOPER"
