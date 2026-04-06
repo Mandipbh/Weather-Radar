@@ -76,6 +76,9 @@ dependencies {
     // AppLovin
     implementation(libs.applovin.sdk)
 
+    //mapbox
+    implementation("com.mapbox.maps:android-ndk27:11.21.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

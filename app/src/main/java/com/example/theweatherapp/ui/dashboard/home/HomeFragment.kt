@@ -1,5 +1,6 @@
 package com.example.theweatherapp.ui.dashboard.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.example.theweatherapp.databinding.FragmentHomeBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import com.example.theweatherapp.ui.dashboard.DashboardActivity
 import com.example.theweatherapp.ui.dashboard.home.model.HourlyData
+import com.example.theweatherapp.ui.radar.RadarActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -146,6 +148,12 @@ class HomeFragment : Fragment() {
         
         // Current Time from API
         binding.tvCurrentTime.text = weather.location.localtime
+
+        //navigate to radar screen
+        binding.llRadar.setOnClickListener {
+            val intent = Intent(requireContext(), RadarActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun updateHourlyForecast(hours: List<com.example.theweatherapp.data.api.Hour>, localTime: String) {

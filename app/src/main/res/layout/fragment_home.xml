@@ -422,6 +422,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_radar"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/bg_radar_banner"

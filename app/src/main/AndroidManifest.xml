@@ -17,6 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheWeatherApp">
+        <activity
+            android:name=".ui.radar.RadarActivity"
+            android:exported="false" />
+        <meta-data
+            android:name="com.mapbox.token"
+            android:value="@string/mapbox_access_token" />
         <!-- AppLovin SDK Key -->
         <meta-data
             android:name="applovin.sdk.key"
