@@ -4,15 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.theweatherapp.R
 import com.example.theweatherapp.data.api.WeatherResponse
 import com.example.theweatherapp.databinding.FragmentHomeBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import com.example.theweatherapp.ui.dashboard.DashboardActivity
 import com.example.theweatherapp.ui.dashboard.home.model.HourlyData
+import com.example.theweatherapp.ui.dashboard.home.model.SavedAddress
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -27,11 +33,12 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    // Use activityViewModels() to share the ViewModel with DashboardActivity
     private val weatherViewModel: WeatherViewModel by activityViewModels()
 
     private var autoRefreshJob: Job? = null
-    private val refreshInterval = 15 * 60 * 1000L // Auto-refresh every 15 minutes
+    private val refreshInterval = 15 * 60 * 1000L
+
+    private lateinit var savedAddressAdapter: SavedAddressAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,10 +52,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
+        setupRecyclerViews()
         setupSwipeRefresh()
+        setupClickListeners()
 
-        // Observe weather data from the shared ViewModel
+        // Observe weather data
         weatherViewModel.weatherData.observe(viewLifecycleOwner) { response ->
             response?.let { updateUI(it) }
         }
@@ -74,12 +82,68 @@ class HomeFragment : Fragment() {
         weatherViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.swipeRefreshLayout.isRefreshing = isLoading
         }
+
+        // Observe saved addresses
+        weatherViewModel.savedAddresses.observe(viewLifecycleOwner) { addresses ->
+            savedAddressAdapter.updateList(addresses)
+            binding.layoutSavedAddresses.visibility = if (addresses.isEmpty()) View.GONE else View.VISIBLE
+        }
     }
 
-    private fun setupRecyclerView() {
-        // Changed to Vertical as per request
+    private fun setupRecyclerViews() {
+        // Hourly Forecast
         binding.rvHourly.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvHourly.isNestedScrollingEnabled = false
+
+        // Saved Addresses
+        savedAddressAdapter = SavedAddressAdapter(
+            addresses = emptyList(),
+            onDeleteClick = { address -> weatherViewModel.deleteAddress(address) },
+            onItemClick = { address -> 
+                // When an address is clicked, fetch weather for the city
+                weatherViewModel.getWeather(address.cityName, "6397395029e04870817112041242311")
+                Toast.makeText(context, "Fetching weather for ${address.cityName}", Toast.LENGTH_SHORT).show()
+            }
+        )
+        binding.rvSavedAddresses.adapter = savedAddressAdapter
+    }
+
+    private fun setupClickListeners() {
+        binding.btnAdd.setOnClickListener {
+            showAddAddressBottomSheet()
+        }
+    }
+
+    private fun showAddAddressBottomSheet() {
+        val dialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_add_address, null)
+        
+        val etPincode = view.findViewById<EditText>(R.id.et_pincode)
+        val etCity = view.findViewById<EditText>(R.id.et_city_name)
+        val etState = view.findViewById<EditText>(R.id.et_state_name)
+        val etFull = view.findViewById<EditText>(R.id.et_full_address)
+        val btnSave = view.findViewById<Button>(R.id.btn_save_address)
+
+        btnSave.setOnClickListener {
+            val pincode = etPincode.text.toString().trim()
+            val city = etCity.text.toString().trim()
+            val state = etState.text.toString().trim()
+            val full = etFull.text.toString().trim()
+
+            if (pincode.isNotEmpty() && city.isNotEmpty() && state.isNotEmpty() && full.isNotEmpty()) {
+                weatherViewModel.addAddress(pincode, city, state, full)
+                dialog.dismiss()
+                Toast.makeText(context, "Address saved", Toast.LENGTH_SHORT).show()
+            } else {
+                if (pincode.isEmpty()) etPincode.error = "Enter pincode"
+                if (city.isEmpty()) etCity.error = "Enter city"
+                if (state.isEmpty()) etState.error = "Enter state"
+                if (full.isEmpty()) etFull.error = "Enter full address"
+            }
+        }
+
+        dialog.setContentView(view)
+        dialog.show()
     }
 
     override fun onResume() {
@@ -94,11 +158,9 @@ class HomeFragment : Fragment() {
 
     private fun setupSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            // Manually trigger a refresh
             (activity as? DashboardActivity)?.requestLocation()
         }
         
-        // Configure refresh colors
         binding.swipeRefreshLayout.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
@@ -108,14 +170,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun startAutoRefresh() {
-        // Stop any existing job to avoid duplicates
         stopAutoRefresh()
-        
         autoRefreshJob = viewLifecycleOwner.lifecycleScope.launch {
             while (isActive) {
-                // Wait for the interval before the next refresh
                 delay(refreshInterval)
-                // Trigger refresh via the activity
                 (activity as? DashboardActivity)?.requestLocation()
             }
         }
@@ -127,31 +185,22 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateUI(weather: WeatherResponse) {
-        // Main weather info
         binding.tvCondition.text = weather.current.condition.text.uppercase()
         binding.tvTemperature.text = weather.current.tempC.toInt().toString()
         
-        // Min/Max and Rain
         val forecastDay = weather.forecast?.forecastday?.firstOrNull()
         if (forecastDay != null) {
             binding.tvMinMax.text = "${forecastDay.day.minTempC.toInt()}°C / ${forecastDay.day.maxTempC.toInt()}°C"
             binding.tvRainChance.text = "${forecastDay.day.dailyChanceOfRain}%"
-            
-            // Update Hourly Forecast
             updateHourlyForecast(forecastDay.hour, weather.location.localtime)
         }
 
-        // Real Feel
         binding.tvRealFeel.text = "Real Feel ${weather.current.feelslikeC.toInt()}°C"
-        
-        // Current Time from API
         binding.tvCurrentTime.text = weather.location.localtime
     }
 
     private fun updateHourlyForecast(hours: List<com.example.theweatherapp.data.api.Hour>, localTime: String) {
         val hourlyList = mutableListOf<HourlyData>()
-        
-        // Parse current hour to identify "Now"
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         val currentHourStr = try {
             val date = sdf.parse(localTime)
@@ -161,9 +210,8 @@ class HomeFragment : Fragment() {
         }
 
         hours.forEach { hour ->
-            val hourOfDay = hour.time.split(" ").last() // e.g., "2024-03-19 13:00" -> "13:00"
+            val hourOfDay = hour.time.split(" ").last()
             val hourOnly = hourOfDay.split(":").first()
-            
             val displayTime = if (hourOnly == currentHourStr) "Now" else hourOfDay
             
             hourlyList.add(
@@ -176,7 +224,6 @@ class HomeFragment : Fragment() {
             )
         }
 
-        // Filter to only show current and future hours for today
         val filteredList = hourlyList.filterIndexed { index, hourlyData ->
             val hourOnly = hours[index].time.split(" ").last().split(":").first()
             hourOnly >= currentHourStr || hourlyData.time == "Now"

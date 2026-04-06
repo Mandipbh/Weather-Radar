@@ -271,19 +271,18 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun processAddress(address: android.location.Address) {
-        // Line 1: SubLocality or FeatureName
-        val line1 = address.subLocality ?: address.featureName ?: ""
+        // Line 1: Detailed address (Full Address Line)
+        val line1 = address.getAddressLine(0) ?: ""
         
-        // Line 2: Locality, PostalCode, AdminArea, Country
+        // Line 2: City, State, Pincode
         val parts = mutableListOf<String>()
-        address.locality?.let { parts.add(it) }
-        address.postalCode?.let { parts.add(it) }
-        address.adminArea?.let { parts.add(it) }
-        address.countryName?.let { parts.add(it) }
+        address.locality?.let { parts.add(it) } // City
+        address.adminArea?.let { parts.add(it) } // State
+        address.postalCode?.let { parts.add(it) } // Pincode
         
         val line2 = parts.joinToString(", ")
 
-        val fullAddress = if (line1.isNotEmpty()) "$line1|$line2" else line2
+        val fullAddress = if (line2.isNotEmpty()) "$line1|$line2" else line1
 
         Log.d("DashboardActivity", "Resolved Address: $fullAddress")
         runOnUiThread {
