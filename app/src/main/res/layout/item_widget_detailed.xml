@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="#2A3555"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="352, Block A Phase 1 Johar Town, Lahore, 54770, Pakistan"
+            android:textColor="@color/white_70"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/iv_refresh"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_refresh"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_refresh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30°"
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_location" />
+
+        <TextView
+            android:id="@+id/tv_time_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6:24 pm Mon, 30 March 2026"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/tv_temp"
+            app:layout_constraintTop_toTopOf="@id/tv_temp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overcast Clouds"
+            android:textColor="@color/white_70"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/tv_time_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_time_date" />
+
+        <LinearLayout
+            android:id="@+id/ll_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_temp">
+
+            <TextView
+                android:id="@+id/tv_uv_humidity"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="UV Index: 0\nHumidity: 27%"
+                android:textColor="@color/white_70"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_min_max_precip"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Min: 19° Max: 33°\nPrecipitation: 0.00 mm"
+                android:textColor="@color/white_70"
+                android:textSize="12sp"
+                android:gravity="end"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white_30"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/ll_details" />
+
+        <LinearLayout
+            android:id="@+id/ll_forecast_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/divider">
+
+            <include android:id="@+id/item_1" layout="@layout/item_widget_forecast_mini" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"/>
+            <include android:id="@+id/item_2" layout="@layout/item_widget_forecast_mini" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"/>
+            <include android:id="@+id/item_3" layout="@layout/item_widget_forecast_mini" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"/>
+            <include android:id="@+id/item_4" layout="@layout/item_widget_forecast_mini" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"/>
+            <include android:id="@+id/item_5" layout="@layout/item_widget_forecast_mini" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"/>
+            <include android:id="@+id/item_6" layout="@layout/item_widget_forecast_mini" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/selection_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_widget_selection"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

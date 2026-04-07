@@ -25,6 +25,7 @@ import androidx.core.view.GravityCompat
 import com.example.theweatherapp.R
 import com.example.theweatherapp.databinding.ActivityDashboardBinding
 import com.example.theweatherapp.ui.WeatherViewModel
+import com.example.theweatherapp.ui.dashboard.customise.CustomiseActivity
 import com.example.theweatherapp.ui.dashboard.feedback.FeedbackFragment
 import com.example.theweatherapp.ui.dashboard.home.HomeFragment
 import com.example.theweatherapp.ui.dashboard.language.LanguageFragment
@@ -102,6 +103,9 @@ class DashboardActivity : AppCompatActivity() {
                         )
                         .replace(R.id.nav_host_fragment_content_dashboard, HomeFragment())
                         .commit()
+                }
+                R.id.nav_customise -> {
+                    startActivity(Intent(this, CustomiseActivity::class.java))
                 }
                 R.id.nav_language -> {
                     openLanguageFragment()

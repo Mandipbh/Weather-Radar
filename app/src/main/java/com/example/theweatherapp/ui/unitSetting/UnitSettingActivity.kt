@@ -25,8 +25,10 @@ class UnitSettingActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { _ ->
-        navigateToLocationPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            navigateToLocationPermission()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +47,6 @@ class UnitSettingActivity : AppCompatActivity() {
             .setView(dialogBinding.root)
             .setCancelable(false)
             .create()
-
-        // requestFeature() must be called before adding content. 
-        // For AlertDialog, the view is already set via Builder.setView(), so we should avoid calling it here.
-        // AlertDialog by default doesn't show a title if none is set.
 
         dialog.show()
 
@@ -75,7 +73,7 @@ class UnitSettingActivity : AppCompatActivity() {
 
         dialogBinding.btnDontAllow.setOnClickListener {
             dialog.dismiss()
-            navigateToLocationPermission()
+            // Keep in the same page - no navigation here
         }
     }
 

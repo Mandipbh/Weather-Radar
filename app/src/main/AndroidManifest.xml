@@ -27,6 +27,10 @@
             android:name=".ui.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.dashboard.customise.CustomiseActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.locationPermission.LocationPermissionActivity"
             android:exported="false" />
         <activity
