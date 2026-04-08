@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add New Address"
+        android:text="@string/add_new_add"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Pincode"
+        android:hint="@string/pin_code_text"
         android:textColorHint="#80FFFFFF"
         app:boxStrokeColor="#00E5FF"
         app:hintTextColor="#00E5FF">
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="City Name"
+        android:hint="@string/city_name"
         android:textColorHint="#80FFFFFF"
         app:boxStrokeColor="#00E5FF"
         app:hintTextColor="#00E5FF">
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="State Name"
+        android:hint="@string/state_name"
         android:textColorHint="#80FFFFFF"
         app:boxStrokeColor="#00E5FF"
         app:hintTextColor="#00E5FF">
@@ -82,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="Full Address"
+        android:hint="@string/full_add"
         android:textColorHint="#80FFFFFF"
         app:boxStrokeColor="#00E5FF"
         app:hintTextColor="#00E5FF">
@@ -103,7 +103,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_done_button"
-        android:text="SAVE ADDRESS"
+        android:text="@string/save_add"
         android:textColor="@color/white"
         android:textStyle="bold" />
 

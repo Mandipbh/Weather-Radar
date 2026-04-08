@@ -42,7 +42,7 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:text="Detecting Location..."
+                        android:text="@string/detecting_location"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -176,7 +176,7 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="14dp"
                         android:paddingBottom="5dp"
-                        android:text="--"
+                        android:text="@string/double_dash"
                         android:textColor="#00E5FF"
                         android:textSize="11sp"
                         android:textStyle="bold" />
@@ -192,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:includeFontPadding="false"
                             android:letterSpacing="-0.03"
-                            android:text="--"
+                            android:text="@string/double_dash"
                             android:textColor="#FFFFFF"
                             android:textSize="92sp"
                             android:textStyle="bold"
@@ -205,7 +205,7 @@
                             android:layout_gravity="top"
                             android:layout_marginStart="4dp"
                             android:layout_marginTop="14dp"
-                            android:text="°C"
+                            android:text="@string/c"
                             android:textColor="#FFFFFF"
                             android:textSize="30sp"
                             android:textStyle="bold"
@@ -250,7 +250,7 @@
                             android:paddingTop="5dp"
                             android:paddingEnd="12dp"
                             android:paddingBottom="5dp"
-                            android:text="--°C / --°C"
+                            android:text="@string/min_max_temp"
                             android:textColor="#DDFFFFFF"
                             android:textSize="13sp"
                             android:textStyle="bold" />
@@ -277,7 +277,7 @@
                                 android:id="@+id/tv_rain_chance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="0%"
+                                android:text="@string/zero_percent"
                                 android:textColor="@color/white"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
@@ -289,7 +289,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="14dp"
-                        android:text="Real Feel --°C"
+                        android:text="@string/reel_feel"
                         android:textColor="#80FFFFFF"
                         android:textSize="13sp" />
 
@@ -348,7 +348,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="6:08am"
+                            android:text="@string/morning_time"
                             android:textColor="#60FFFFFF"
                             android:textSize="11sp" />
 
@@ -365,7 +365,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="6:12pm"
+                            android:text="@string/evening_time"
                             android:textColor="#60FFFFFF"
                             android:textSize="11sp" />
                     </LinearLayout>
@@ -394,7 +394,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="⚠ Warning"
+                            android:text="@string/warning"
                             android:textColor="#F5A623"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -442,7 +442,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_weight="1"
-                            android:text="Check your radar location now!"
+                            android:text="@string/check_your_radar_location"
                             android:textColor="#DDFFFFFF"
                             android:textSize="13sp"
                             android:textStyle="bold" />
@@ -478,7 +478,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Hourly Forecast"
+                            android:text="@string/hourly_forecast"
                             android:textColor="#F5A623"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -509,7 +509,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="Saved Addresses"
+                        android:text="@string/saved_add"
                         android:textColor="#00E5FF"
                         android:textSize="14sp"
                         android:textStyle="bold" />

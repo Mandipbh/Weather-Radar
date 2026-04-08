@@ -7,11 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.theweatherapp.R
+import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityLocationPermissionBinding
 import com.example.theweatherapp.databinding.ActivityUnitSettingBinding
 import com.example.theweatherapp.ui.dashboard.DashboardActivity
 
-class LocationPermissionActivity : AppCompatActivity() {
+class LocationPermissionActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLocationPermissionBinding
 

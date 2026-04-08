@@ -15,11 +15,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityUnitSettingBinding
 import com.example.theweatherapp.databinding.DialogNotificationPermissionBinding
 import com.example.theweatherapp.ui.dashboard.DashboardActivity
 
-class UnitSettingActivity : AppCompatActivity() {
+class UnitSettingActivity : BaseActivity() {
 
     private lateinit var binding: ActivityUnitSettingBinding
 

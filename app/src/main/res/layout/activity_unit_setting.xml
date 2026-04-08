@@ -72,7 +72,7 @@
             android:layout_marginTop="14dp"
             android:fontFamily="sans-serif-medium"
             android:letterSpacing="0.03"
-            android:text="Unit Settings"
+            android:text="@string/unit_setting"
             android:textColor="@color/white"
             android:textSize="26sp"
             android:textStyle="bold" />
@@ -86,7 +86,7 @@
             android:paddingTop="4dp"
             android:paddingEnd="14dp"
             android:paddingBottom="4dp"
-            android:text="PERSONALISE"
+            android:text="@string/personalise"
             android:textColor="#00E5FF"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -98,7 +98,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:lineSpacingMultiplier="1.4"
-            android:text="Choose your preferred units for best experience"
+            android:text="@string/choose_unit"
             android:textColor="#99FFFFFF"
             android:textSize="13sp" />
 
@@ -146,7 +146,7 @@
                         android:paddingStart="14dp"
                         android:paddingTop="12dp"
                         android:paddingBottom="4dp"
-                        android:text="BASIC"
+                        android:text="@string/basic"
                         android:textColor="#00E5FF"
                         android:textSize="10sp"
                         android:textStyle="bold" />
@@ -171,7 +171,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Temperature"
+                            android:text="@string/temperature"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -187,13 +187,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:checked="true"
-                                android:text="°C" />
+                                android:text="@string/c" />
 
                             <com.google.android.material.chip.Chip
                                 style="@style/Widget.App.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="°F" />
+                                android:text="@string/f" />
                         </com.google.android.material.chip.ChipGroup>
                     </LinearLayout>
 
@@ -219,7 +219,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Time Format"
+                            android:text="@string/time_format"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -234,13 +234,13 @@
                                 style="@style/Widget.App.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="12h" />
+                                android:text="@string/twelve_hour" />
 
                             <com.google.android.material.chip.Chip
                                 style="@style/Widget.App.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="24h" />
+                                android:text="@string/twenty_four_hour" />
                         </com.google.android.material.chip.ChipGroup>
                     </LinearLayout>
 
@@ -266,7 +266,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Precipitation"
+                            android:text="@string/precipitation"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -281,13 +281,13 @@
                                 style="@style/Widget.App.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="mm" />
+                                android:text="@string/mm" />
 
                             <com.google.android.material.chip.Chip
                                 style="@style/Widget.App.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="in" />
+                                android:text="@string/in" />
                         </com.google.android.material.chip.ChipGroup>
                     </LinearLayout>
 
@@ -313,7 +313,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Distance"
+                            android:text="@string/distance"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -328,13 +328,13 @@
                                 style="@style/Widget.App.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="km" />
+                                android:text="@string/km" />
 
                             <com.google.android.material.chip.Chip
                                 style="@style/Widget.App.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="mi" />
+                                android:text="@string/mi" />
                         </com.google.android.material.chip.ChipGroup>
                     </LinearLayout>
 
@@ -373,7 +373,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Wind Speed"
+                            android:text="@string/wind_speed"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -387,7 +387,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.15"
-                            android:text="WIND"
+                            android:text="@string/wind"
                             android:textColor="#00E5FF"
                             android:textSize="10sp"
                             android:textStyle="bold" />
@@ -404,31 +404,31 @@
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="m/s" />
+                            android:text="@string/ms" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="km/h" />
+                            android:text="@string/kmh" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="mi/h" />
+                            android:text="@string/mih" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Knot" />
+                            android:text="@string/knot" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Beaufort scale" />
+                            android:text="@string/beaufort_scale" />
                     </com.google.android.material.chip.ChipGroup>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -465,7 +465,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pressure"
+                            android:text="@string/pressure"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -496,37 +496,37 @@
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="mmHg" />
+                            android:text="@string/mm_hg" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="hPa" />
+                            android:text="@string/h_pa" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="atm" />
+                            android:text="@string/atm" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="mBar" />
+                            android:text="@string/m_bar" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="inHg" />
+                            android:text="@string/in_hg" />
 
                         <com.google.android.material.chip.Chip
                             style="@style/Widget.App.Chip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="kPa" />
+                            android:text="@string/k_pa" />
                     </com.google.android.material.chip.ChipGroup>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -574,7 +574,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ongoing Notification"
+                            android:text="@string/ongoing_notification"
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -583,7 +583,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
-                            android:text="Show weather in status bar"
+                            android:text="@string/show_weather_in_status_bar"
                             android:textColor="#80FFFFFF"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -609,7 +609,7 @@
         android:layout_marginBottom="28dp"
         android:background="@drawable/bg_done_button"
         android:letterSpacing="0.08"
-        android:text="SAVE PREFERENCES"
+        android:text="@string/save_preferences"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"

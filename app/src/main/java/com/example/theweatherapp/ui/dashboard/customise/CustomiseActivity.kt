@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityCustomiseBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import com.example.theweatherapp.ui.dashboard.customise.model.WidgetPreview
@@ -14,7 +15,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CustomiseActivity : AppCompatActivity() {
+class CustomiseActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCustomiseBinding
     private val weatherViewModel: WeatherViewModel by viewModels()

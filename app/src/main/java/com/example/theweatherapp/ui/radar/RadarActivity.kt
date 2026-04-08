@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.theweatherapp.R
+import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityRadarBinding
 import com.example.theweatherapp.utils.Constants.LAYER_CLOUDS
 import com.example.theweatherapp.utils.Constants.LAYER_HUMIDITY
@@ -43,7 +44,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
-class RadarActivity : AppCompatActivity() {
+class RadarActivity : BaseActivity() {
     private lateinit var binding: ActivityRadarBinding
 
     private lateinit var mapboxMap: MapboxMap

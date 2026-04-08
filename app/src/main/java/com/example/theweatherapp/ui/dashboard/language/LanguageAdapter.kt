@@ -22,14 +22,16 @@ class LanguageAdapter(
             view.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val clickedLanguage = languages[position]
-                    
-                    // Update selection state locally
+
+                    val previousIndex = languages.indexOfFirst { it.isSelected }
+
                     languages.forEach { it.isSelected = false }
-                    clickedLanguage.isSelected = true
-                    
-                    notifyDataSetChanged()
-                    onLanguageSelected(clickedLanguage)
+                    languages[position].isSelected = true
+
+                    if (previousIndex != -1) notifyItemChanged(previousIndex)
+                    notifyItemChanged(position)
+
+                    onLanguageSelected(languages[position])
                 }
             }
         }

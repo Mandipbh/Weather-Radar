@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_unit_settings">
 
-    <!-- Background Aurora Blobs for Theme Consistency -->
     <View
         android:layout_width="250dp"
         android:layout_height="250dp"
@@ -27,7 +26,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- TOP BAR -->
     <RelativeLayout
         android:id="@+id/layoutTopBar"
         android:layout_width="0dp"
@@ -43,14 +41,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Language"
+            android:text="@string/language"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
-    <!-- Header Description -->
     <LinearLayout
         android:id="@+id/headerText"
         android:layout_width="match_parent"
@@ -62,7 +59,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose your language"
+            android:text="@string/choose_your_language"
             android:textColor="#FFFFFF"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -71,12 +68,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="The app will restart to apply changes"
+            android:text="@string/app_will_restart"
             android:textColor="#80FFFFFF"
             android:textSize="13sp" />
     </LinearLayout>
 
-    <!-- LANGUAGE LIST -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLanguages"
         android:layout_width="0dp"

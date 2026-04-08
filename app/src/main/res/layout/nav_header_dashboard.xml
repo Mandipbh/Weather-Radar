@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!-- Dark blue top section with premium card -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +13,6 @@
         android:background="@color/white_70"
         android:paddingBottom="14dp">
 
-        <!-- Premium Banner Card -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +29,6 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Top Row: App Icon + Name + PREMIUM badge -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,7 +46,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="9Weather"
+                        android:text="@string/app_name"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -57,7 +54,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PREMIUM"
+                        android:text="@string/premium"
                         android:textColor="#1E2A45"
                         android:textSize="11sp"
                         android:textStyle="bold"
@@ -68,17 +65,15 @@
                         android:paddingBottom="5dp" />
                 </LinearLayout>
 
-                <!-- Title -->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Unlock Premium Weather\nFeatures Today"
+                    android:text="@string/unlock_premium"
                     android:textColor="#FFFFFF"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="14dp" />
 
-                <!-- Feature: No advertising -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,7 +84,7 @@
                     <TextView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:text="AD"
+                        android:text="@string/ad"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:textStyle="bold"
@@ -100,12 +95,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No advertising"
+                        android:text="@string/no_advertising"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Feature: Faster data -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,12 +116,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Faster data loading"
+                        android:text="@string/faster_data_loading"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- Feature: Support -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -144,16 +137,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Better direct support and many more..."
+                        android:text="@string/better_direct_support"
                         android:textColor="#FFFFFF"
                         android:textSize="14sp" />
                 </LinearLayout>
 
-                <!-- View Details Button -->
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:text="VIEW DETAILS  »"
+                    android:text="@string/view_details"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:backgroundTint="@color/accent"
@@ -167,7 +159,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SETTINGS"
+        android:text="@string/settings"
         android:textColor="@color/accent_orange"
         android:textSize="18sp"
         android:textStyle="bold"

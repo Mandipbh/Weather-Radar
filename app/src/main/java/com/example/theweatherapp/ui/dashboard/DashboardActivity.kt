@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import com.example.theweatherapp.R
+import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityDashboardBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import com.example.theweatherapp.ui.dashboard.customise.CustomiseActivity
@@ -36,7 +37,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
     private val weatherViewModel: WeatherViewModel by viewModels()

@@ -26,7 +26,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="100dp" />
 
-    <!-- ===== TOP BAR ===== -->
     <RelativeLayout
         android:id="@+id/layoutTopBar"
         android:layout_width="0dp"
@@ -38,11 +37,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Title -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Feedback &amp; Suggestions"
+            android:text="@string/feedback_suggestions"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -50,7 +48,6 @@
             android:layout_toStartOf="@id/btnShareTop"
             android:layout_centerVertical="true" />
 
-        <!-- Top share / quick-send icon -->
         <ImageButton
             android:id="@+id/btnShareTop"
             android:layout_width="40dp"
@@ -64,7 +61,6 @@
 
     </RelativeLayout>
 
-    <!-- ===== SCROLLABLE CONTENT ===== -->
     <ScrollView
         android:id="@+id/scrollContent"
         android:layout_width="0dp"
@@ -85,8 +81,6 @@
             android:paddingTop="16dp"
             android:paddingBottom="12dp">
 
-            <!-- ── HEADER BLOCK ── -->
-            <!-- Feedback tag pill -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,38 +103,35 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FEEDBACK"
+                    android:text="@string/feedback"
                     android:textColor="#00E5FF"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.12" />
             </LinearLayout>
 
-            <!-- Title -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Share your thoughts"
+                android:text="@string/share_your_thoughts"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp" />
 
-            <!-- Subtitle -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="We read every message carefully to make the app better for you. Thank you for your support."
+                android:text="@string/we_read_every_message"
                 android:textColor="#80FFFFFF"
                 android:textSize="13sp"
                 android:lineSpacingMultiplier="1.4"
                 android:layout_marginBottom="20dp" />
 
-            <!-- ── TITLE INPUT ── -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TITLE"
+                android:text="@string/title"
                 android:textColor="#55FFFFFF"
                 android:textSize="10sp"
                 android:textStyle="bold"
@@ -153,7 +144,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:hint="Brief summary of your feedback"
+                android:hint="@string/brief_summary"
                 app:counterEnabled="true"
                 app:counterMaxLength="80"
                 app:boxCornerRadiusTopStart="14dp"
@@ -171,7 +162,6 @@
                     android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- ── MESSAGE INPUT ── -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,7 +174,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="MESSAGE"
+                    android:text="@string/message"
                     android:textColor="#55FFFFFF"
                     android:textSize="10sp"
                     android:textStyle="bold"
@@ -205,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:hint="Describe your feedback in detail..."
+                android:hint="@string/describe_your_feedback"
                 app:counterEnabled="true"
                 app:counterMaxLength="500"
                 app:boxCornerRadiusTopStart="14dp"
@@ -229,7 +219,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- ===== SEND BUTTON ===== -->
     <LinearLayout
         android:id="@+id/btnSend"
         android:layout_width="0dp"
@@ -246,7 +235,7 @@
             android:id="@+id/btnSendFeedback"
             android:layout_width="match_parent"
             android:layout_height="54dp"
-            android:text="SEND FEEDBACK"
+            android:text="@string/send_feedback"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="14sp"
@@ -259,7 +248,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your feedback is anonymous and secure"
+            android:text="@string/your_feedback_is_anonymous_and_secure"
             android:textColor="#40FFFFFF"
             android:textSize="11sp"
             android:gravity="center"

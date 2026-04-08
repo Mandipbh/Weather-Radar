@@ -12,7 +12,7 @@
         android:id="@+id/tvLanguageName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="English (US)"
+        android:text="@string/english"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:textStyle="normal"

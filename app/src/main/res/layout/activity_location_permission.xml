@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Location Permission"
+            android:text="@string/location_permission"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -35,7 +35,7 @@
             android:alpha="0.8"
             android:gravity="center"
             android:paddingHorizontal="24dp"
-            android:text="Turn on location services to get the most\n accurate forecast for your location"
+            android:text="@string/turn_on_location_services"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -66,7 +66,7 @@
             android:alpha="0.8"
             android:gravity="center"
             android:paddingHorizontal="24dp"
-            android:text="We use your location to provide local\n weather, alerts and other fetures. You can\n change it at any time in your setting."
+            android:text="@string/we_use_your_location"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -76,7 +76,7 @@
             android:layout_height="56dp"
             android:layout_margin="20dp"
             android:backgroundTint="@color/accent"
-            android:text="ENABLE MY LOCATION"
+            android:text="@string/enable_my_location"
             android:textColor="@color/white" />
 
     </LinearLayout>

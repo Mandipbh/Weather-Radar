@@ -8,50 +8,50 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="Home" />
+            android:title="@string/menu_home" />
 
         <item
             android:id="@+id/nav_manage_location"
             android:icon="@drawable/ic_location"
-            android:title="Manage location" />
+            android:title="@string/menu_manage_location" />
 
         <item
             android:id="@+id/nav_unit_preference"
             android:icon="@drawable/ic_setting"
-            android:title="Unit Preference Setting" />
+            android:title="@string/menu_unit_preference_setting" />
 
         <item
             android:id="@+id/nav_notification"
             android:icon="@drawable/ic_notification"
-            android:title="Notification Settings" />
+            android:title="@string/menu_notification_settings" />
 
         <item
             android:id="@+id/nav_radar"
             android:icon="@drawable/ic_radar"
-            android:title="Radar" />
+            android:title="@string/menu_radar" />
 
         <item
             android:id="@+id/nav_pro"
             android:icon="@drawable/ic_star"
-            android:title="Get PRO Version" />
+            android:title="@string/menu_get_pro_version" />
 
         <item
             android:id="@+id/nav_customise"
             android:icon="@drawable/ic_customise"
-            android:title="Customise" />
+            android:title="@string/menu_customise" />
 
         <item
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_language"
-            android:title="Language" />
+            android:title="@string/menu_language" />
 
         <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_feedback"
-            android:title="Feedback &amp; Suggestions" />
+            android:title="@string/menu_feedback" />
 
         <item
-            android:title="DEVELOPER"
+            android:title="@string/menu_developer"
             android:enabled="false"
             android:id="@+id/nav_developer_header" />
     </group>
