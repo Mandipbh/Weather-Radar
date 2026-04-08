@@ -17,17 +17,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TheWeatherApp">
+
         <activity
             android:name=".ui.radar.RadarActivity"
             android:exported="false" />
         <!-- AppLovin SDK Key -->
         <meta-data
             android:name="applovin.sdk.key"
-            android:value="YOUR_SDK_KEY_HERE" />
+            android:value="KxTb61oTVUHpEw7L_DR6v-Mgt00UBdwoMSopsq-I1TyQLrhADyKq3mRPyG8ChATZrGg4BOAoZ8MN7CekOeAV6Q" />
 
         <activity
             android:name=".ui.dashboard.DashboardActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.customise.CustomiseActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.locationPermission.LocationPermissionActivity"
             android:exported="false" />

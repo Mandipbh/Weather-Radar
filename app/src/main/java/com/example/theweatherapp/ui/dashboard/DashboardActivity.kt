@@ -25,6 +25,7 @@ import androidx.core.view.GravityCompat
 import com.example.theweatherapp.R
 import com.example.theweatherapp.databinding.ActivityDashboardBinding
 import com.example.theweatherapp.ui.WeatherViewModel
+import com.example.theweatherapp.ui.dashboard.customise.CustomiseActivity
 import com.example.theweatherapp.ui.dashboard.feedback.FeedbackFragment
 import com.example.theweatherapp.ui.dashboard.home.HomeFragment
 import com.example.theweatherapp.ui.dashboard.language.LanguageFragment
@@ -102,6 +103,9 @@ class DashboardActivity : AppCompatActivity() {
                         )
                         .replace(R.id.nav_host_fragment_content_dashboard, HomeFragment())
                         .commit()
+                }
+                R.id.nav_customise -> {
+                    startActivity(Intent(this, CustomiseActivity::class.java))
                 }
                 R.id.nav_language -> {
                     openLanguageFragment()
@@ -271,19 +275,18 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun processAddress(address: android.location.Address) {
-        // Line 1: SubLocality or FeatureName
-        val line1 = address.subLocality ?: address.featureName ?: ""
+        // Line 1: Detailed address (Full Address Line)
+        val line1 = address.getAddressLine(0) ?: ""
         
-        // Line 2: Locality, PostalCode, AdminArea, Country
+        // Line 2: City, State, Pincode
         val parts = mutableListOf<String>()
-        address.locality?.let { parts.add(it) }
-        address.postalCode?.let { parts.add(it) }
-        address.adminArea?.let { parts.add(it) }
-        address.countryName?.let { parts.add(it) }
+        address.locality?.let { parts.add(it) } // City
+        address.adminArea?.let { parts.add(it) } // State
+        address.postalCode?.let { parts.add(it) } // Pincode
         
         val line2 = parts.joinToString(", ")
 
-        val fullAddress = if (line1.isNotEmpty()) "$line1|$line2" else line2
+        val fullAddress = if (line2.isNotEmpty()) "$line1|$line2" else line1
 
         Log.d("DashboardActivity", "Resolved Address: $fullAddress")
         runOnUiThread {

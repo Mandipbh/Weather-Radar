@@ -482,18 +482,8 @@
                             android:textColor="#F5A623"
                             android:textSize="14sp"
                             android:textStyle="bold" />
-
-                      <!--  <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:letterSpacing="0.05"
-                            android:text="VIEW ALL →"
-                            android:textColor="#6600E5FF"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />-->
                     </LinearLayout>
 
-                    <!-- RecyclerView for hourly data -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_hourly"
                         android:layout_width="match_parent"
@@ -503,7 +493,34 @@
                         tools:itemCount="12"
                         android:nestedScrollingEnabled="false"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/layout_saved_addresses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_hourly"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="30dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Saved Addresses"
+                        android:textColor="#00E5FF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_saved_addresses"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_saved_address" />
                 </LinearLayout>
 
             </RelativeLayout>
