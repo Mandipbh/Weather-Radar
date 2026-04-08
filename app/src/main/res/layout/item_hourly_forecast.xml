@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="80dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:layout_marginEnd="8dp"
     android:background="@drawable/bg_hourly_card"
-    android:padding="15dp"
-    android:layout_marginEnd="8dp">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/tv_hour_time"
@@ -25,15 +25,29 @@
         android:padding="5dp"
         android:src="@drawable/ic_cloudy" />
 
-    <TextView
-        android:id="@+id/tv_hour_rain"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="0%"
-        android:textColor="#4FC3F7"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_rain"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_hour_rain"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0%"
+            android:textColor="#4FC3F7"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_hour_temp"

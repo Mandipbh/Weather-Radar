@@ -271,14 +271,14 @@
                                 android:layout_height="14dp"
                                 android:layout_marginEnd="4dp"
                                 android:src="@drawable/ic_rain"
-                                app:tint="#4FC3F7" />
+                                app:tint="@color/white" />
 
                             <TextView
                                 android:id="@+id/tv_rain_chance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="0%"
-                                android:textColor="#4FC3F7"
+                                android:textColor="@color/white"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
                         </LinearLayout>

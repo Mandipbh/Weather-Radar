@@ -21,9 +21,10 @@
         <activity
             android:name=".ui.radar.RadarActivity"
             android:exported="false" />
+        <!-- MapBox SDK Key -->
         <meta-data
             android:name="com.mapbox.token"
-            android:value="pk.eyJ1IjoibGlvbGFuIiwiYSI6ImNtbmhhem00MzAwbzcycXF1MzQ5Ym9ueHkifQ.rqhF9pYINCYaOJqIZhYiMA" />
+            android:value="@string/mapbox_access_token" />
         <!-- AppLovin SDK Key -->
         <meta-data
             android:name="applovin.sdk.key"
