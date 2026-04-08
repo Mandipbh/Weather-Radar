@@ -25,10 +25,9 @@ class UnitSettingActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            navigateToLocationPermission()
-        }
+    ) { _ ->
+        // Proceed regardless of permission result
+        navigateToDashboard()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,19 +49,14 @@ class UnitSettingActivity : AppCompatActivity() {
 
         dialog.show()
 
-        // Set transparent background for rounded corners and position it at the bottom
         dialog.window?.let { window ->
             window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            
             val params = window.attributes
             params.gravity = Gravity.BOTTOM
             params.width = WindowManager.LayoutParams.MATCH_PARENT
             params.height = WindowManager.LayoutParams.WRAP_CONTENT
-            // Add a small bottom margin to make it "float" slightly
             params.y = 40 
             window.attributes = params
-            
-            // Set entry/exit animation for bottom sheet feel
             window.setWindowAnimations(android.R.style.Animation_InputMethod)
         }
 
@@ -73,7 +67,8 @@ class UnitSettingActivity : AppCompatActivity() {
 
         dialogBinding.btnDontAllow.setOnClickListener {
             dialog.dismiss()
-            // Keep in the same page - no navigation here
+            // Even if "Don't Allow" is clicked, we move to Dashboard now to prevent getting stuck
+            navigateToDashboard()
         }
     }
 
@@ -84,17 +79,19 @@ class UnitSettingActivity : AppCompatActivity() {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                navigateToLocationPermission()
+                navigateToDashboard()
             } else {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {
-            navigateToLocationPermission()
+            navigateToDashboard()
         }
     }
 
-    private fun navigateToLocationPermission() {
-        startActivity(Intent(this, DashboardActivity::class.java))
+    private fun navigateToDashboard() {
+        val intent = Intent(this, DashboardActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
         finish()
     }
 }
