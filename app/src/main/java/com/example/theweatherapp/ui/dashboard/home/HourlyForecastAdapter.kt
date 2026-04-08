@@ -47,3 +47,4 @@ class HourlyForecastAdapter(
 
     override fun getItemCount() = hours.size
 }
+

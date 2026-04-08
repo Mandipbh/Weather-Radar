@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,8 +17,6 @@ import com.example.theweatherapp.ui.WeatherViewModel
 import com.example.theweatherapp.ui.dashboard.DashboardActivity
 import com.example.theweatherapp.ui.dashboard.home.model.HourlyData
 import com.example.theweatherapp.ui.radar.RadarActivity
-import com.example.theweatherapp.ui.dashboard.home.model.SavedAddress
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -112,40 +108,9 @@ class HomeFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.btnAdd.setOnClickListener {
-            showAddAddressBottomSheet()
+            val intent = Intent(requireContext(), ManageAddressActivity::class.java)
+            startActivity(intent)
         }
-    }
-
-    private fun showAddAddressBottomSheet() {
-        val dialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_add_address, null)
-
-        val etPincode = view.findViewById<EditText>(R.id.et_pincode)
-        val etCity = view.findViewById<EditText>(R.id.et_city_name)
-        val etState = view.findViewById<EditText>(R.id.et_state_name)
-        val etFull = view.findViewById<EditText>(R.id.et_full_address)
-        val btnSave = view.findViewById<Button>(R.id.btn_save_address)
-
-        btnSave.setOnClickListener {
-            val pincode = etPincode.text.toString().trim()
-            val city = etCity.text.toString().trim()
-            val state = etState.text.toString().trim()
-            val full = etFull.text.toString().trim()
-
-            if (pincode.isNotEmpty() && city.isNotEmpty() && state.isNotEmpty() && full.isNotEmpty()) {
-                weatherViewModel.addAddress(pincode, city, state, full)
-                dialog.dismiss()
-                Toast.makeText(context, "Address saved", Toast.LENGTH_SHORT).show()
-            } else {
-                if (pincode.isEmpty()) etPincode.error = "Enter pincode"
-                if (city.isEmpty()) etCity.error = "Enter city"
-                if (state.isEmpty()) etState.error = "Enter state"
-                if (full.isEmpty()) etFull.error = "Enter full address"
-            }
-        }
-
-        dialog.setContentView(view)
-        dialog.show()
     }
 
     override fun onResume() {

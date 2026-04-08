@@ -38,6 +38,14 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.dashboard.home.ManageAddressActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.dashboard.home.PickLocationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.locationPermission.LocationPermissionActivity"
             android:exported="false" />
         <activity

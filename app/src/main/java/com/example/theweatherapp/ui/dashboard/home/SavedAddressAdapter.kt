@@ -3,7 +3,8 @@ package com.example.theweatherapp.ui.dashboard.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.theweatherapp.R
@@ -16,17 +17,18 @@ class SavedAddressAdapter(
 ) : RecyclerView.Adapter<SavedAddressAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvCityState: TextView = view.findViewById(R.id.tv_city_state)
-        val tvPincode: TextView = view.findViewById(R.id.tv_pincode)
+        val ivTypeIcon: ImageView = view.findViewById(R.id.iv_type_icon)
+        val tvAddressType: TextView = view.findViewById(R.id.tv_address_type)
         val tvFullAddress: TextView = view.findViewById(R.id.tv_full_address)
-        val btnDelete: ImageButton = view.findViewById(R.id.btn_delete)
+        val tvReceiverDetails: TextView = view.findViewById(R.id.tv_receiver_details)
+        val rbSelected: RadioButton = view.findViewById(R.id.rb_selected)
 
         init {
             view.setOnClickListener {
-                onItemClick(addresses[adapterPosition])
-            }
-            btnDelete.setOnClickListener {
-                onDeleteClick(addresses[adapterPosition])
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClick(addresses[position])
+                }
             }
         }
     }
@@ -39,9 +41,18 @@ class SavedAddressAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = addresses[position]
-        holder.tvCityState.text = "${item.cityName}, ${item.stateName}"
-        holder.tvPincode.text = item.pincode
+        
+        holder.tvAddressType.text = item.addressType
         holder.tvFullAddress.text = item.fullAddress
+        holder.tvReceiverDetails.text = "${item.receiverName} | ${item.pincode}"
+        holder.rbSelected.isChecked = item.isSelected
+
+        val iconRes = when (item.addressType.lowercase()) {
+            "home" -> R.drawable.ic_home
+            "office" -> R.drawable.ic_distance // Placeholder for work/office
+            else -> R.drawable.ic_location_pin
+        }
+        holder.ivTypeIcon.setImageResource(iconRes)
     }
 
     override fun getItemCount() = addresses.size

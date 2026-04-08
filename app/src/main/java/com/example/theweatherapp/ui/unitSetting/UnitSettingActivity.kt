@@ -1,6 +1,7 @@
 package com.example.theweatherapp.ui.unitSetting
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -26,8 +27,8 @@ class UnitSettingActivity : BaseActivity() {
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { _ ->
-        // Proceed regardless of permission result
+    ) { isGranted ->
+        saveNotificationPreference(isGranted)
         navigateToDashboard()
     }
 
@@ -37,7 +38,14 @@ class UnitSettingActivity : BaseActivity() {
         setContentView(binding.root)
 
         binding.btnDone.setOnClickListener {
-            showNotificationDialog()
+            val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+            val isHandled = prefs.getBoolean("notification_permission_handled", false)
+            
+            if (isHandled) {
+                navigateToDashboard()
+            } else {
+                showNotificationDialog()
+            }
         }
     }
 
@@ -68,7 +76,7 @@ class UnitSettingActivity : BaseActivity() {
 
         dialogBinding.btnDontAllow.setOnClickListener {
             dialog.dismiss()
-            // Even if "Don't Allow" is clicked, we move to Dashboard now to prevent getting stuck
+            saveNotificationPreference(false)
             navigateToDashboard()
         }
     }
@@ -80,13 +88,24 @@ class UnitSettingActivity : BaseActivity() {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
+                saveNotificationPreference(true)
                 navigateToDashboard()
             } else {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {
+            // Below Android 13, permission is granted by default at install
+            saveNotificationPreference(true)
             navigateToDashboard()
         }
+    }
+
+    private fun saveNotificationPreference(enabled: Boolean) {
+        val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        prefs.edit()
+            .putBoolean("notifications_enabled", enabled)
+            .putBoolean("notification_permission_handled", true)
+            .apply()
     }
 
     private fun navigateToDashboard() {

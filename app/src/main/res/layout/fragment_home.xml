@@ -16,7 +16,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp">
+            android:paddingTop="60dp">
 
             <RelativeLayout
                 android:id="@+id/layout_header"
@@ -67,7 +67,8 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/bg_add_button"
                     android:padding="10dp"
-                    android:src="@drawable/ic_add" />
+                    android:src="@drawable/ic_add"
+                    android:contentDescription="Add Location" />
             </RelativeLayout>
 
             <LinearLayout
@@ -103,6 +104,7 @@
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/bg_icon_btn"
                         android:src="@drawable/ic_location_pin"
+                        android:contentDescription="Current Location"
                         app:tint="#CCFFFFFF" />
 
                     <ImageButton
@@ -112,6 +114,7 @@
                         android:layout_marginBottom="8dp"
                         android:background="@drawable/bg_icon_btn"
                         android:src="@drawable/ic_grid"
+                        android:contentDescription="Grid View"
                         app:tint="#CCFFFFFF" />
 
                     <FrameLayout
@@ -125,6 +128,7 @@
                             android:layout_height="36dp"
                             android:background="@drawable/bg_icon_btn"
                             android:src="@drawable/ic_notification"
+                            android:contentDescription="Alerts"
                             app:tint="#CCFFFFFF" />
 
                         <View
@@ -139,7 +143,8 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:background="@drawable/bg_icon_btn_amber"
-                        android:src="@drawable/ic_beer" />
+                        android:src="@drawable/ic_beer"
+                        android:contentDescription="Extras" />
 
                 </LinearLayout>
 
@@ -151,7 +156,8 @@
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="4dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_star_filled" />
+                    android:src="@drawable/ic_star_filled"
+                    android:contentDescription="Favorites" />
 
                 <LinearLayout
                     android:id="@+id/layout_weather_center"
@@ -230,7 +236,8 @@
                             android:layout_width="44dp"
                             android:layout_height="44dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_cloudy" />
+                            android:src="@drawable/ic_cloudy"
+                            android:contentDescription="Weather Icon" />
                     </FrameLayout>
 
                     <LinearLayout
@@ -271,7 +278,8 @@
                                 android:layout_height="14dp"
                                 android:layout_marginEnd="4dp"
                                 android:src="@drawable/ic_rain"
-                                app:tint="@color/white" />
+                                app:tint="@color/white"
+                                android:contentDescription="Rain icon" />
 
                             <TextView
                                 android:id="@+id/tv_rain_chance"
@@ -318,7 +326,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_sunrise"
-                            app:tint="#FFD700" />
+                            app:tint="#FFD700"
+                            android:contentDescription="Sunrise" />
 
                         <ProgressBar
                             android:id="@+id/pb_sun"
@@ -337,7 +346,8 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_sunset"
-                            app:tint="#FF8C00" />
+                            app:tint="#FF8C00"
+                            android:contentDescription="Sunset" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -404,21 +414,24 @@
                             android:layout_height="32dp"
                             android:layout_marginStart="6dp"
                             android:background="@drawable/bg_warn_btn_amber"
-                            android:src="@drawable/ic_uv_warning" />
+                            android:src="@drawable/ic_uv_warning"
+                            android:contentDescription="UV Warning" />
 
                         <ImageButton
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="6dp"
                             android:background="@drawable/bg_warn_btn_green"
-                            android:src="@drawable/ic_air_quality" />
+                            android:src="@drawable/ic_air_quality"
+                            android:contentDescription="Air Quality" />
 
                         <ImageButton
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginStart="6dp"
                             android:background="@drawable/bg_warn_btn_cyan"
-                            android:src="@drawable/ic_radar_circle" />
+                            android:src="@drawable/ic_radar_circle"
+                            android:contentDescription="Radar" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -435,7 +448,8 @@
                             android:layout_width="22dp"
                             android:layout_height="22dp"
                             android:src="@drawable/ic_radar_circle"
-                            app:tint="#DDFFFFFF" />
+                            app:tint="#DDFFFFFF"
+                            android:contentDescription="Radar icon" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -453,7 +467,8 @@
                             android:background="@drawable/bg_glass_button"
                             android:padding="6dp"
                             android:src="@drawable/ic_chevron_right"
-                            app:tint="@color/white" />
+                            app:tint="@color/white"
+                            android:contentDescription="Navigate" />
                     </LinearLayout>
                 </LinearLayout>
 

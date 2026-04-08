@@ -1,99 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_unit_settings"
-    android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="20dp">
 
     <View
+        android:id="@+id/view_drag_handle"
         android:layout_width="40dp"
         android:layout_height="4dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/bg_subtitle_tag"
-        android:alpha="0.3" />
+        android:background="@drawable/bg_dot_inactive"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_new_add"
+        android:layout_marginTop="16dp"
+        android:text="Address details"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_drag_handle" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Complete address would assist better us in serving you"
+        android:textColor="@color/white_70"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@id/btn_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <ImageButton
+        android:id="@+id/btn_close"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_glass_circle"
+        android:src="@drawable/ic_grid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_label_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Select address type"
+        android:textColor="@color/white_70"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_desc" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsv_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_type">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_home"
+                style="@style/Widget.App.Chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Home"
+                app:chipIcon="@drawable/ic_home" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_office"
+                style="@style/Widget.App.Chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Office"
+                app:chipIcon="@drawable/ic_distance" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_other"
+                style="@style/Widget.App.Chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Friend's house"
+                app:chipIcon="@drawable/ic_star" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="@string/pin_code_text"
-        android:textColorHint="#80FFFFFF"
-        app:boxStrokeColor="#00E5FF"
-        app:hintTextColor="#00E5FF">
+        android:hint="Receiver's name *"
+        android:textColorHint="@color/white_30"
+        app:boxStrokeColor="@color/accent"
+        app:hintTextColor="@color/accent"
+        app:layout_constraintTop_toBottomOf="@id/hsv_types">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_pincode"
+            android:id="@+id/et_receiver_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_address"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="@string/city_name"
-        android:textColorHint="#80FFFFFF"
-        app:boxStrokeColor="#00E5FF"
-        app:hintTextColor="#00E5FF">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_city_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapWords"
-            android:textColor="@color/white" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:hint="@string/state_name"
-        android:textColorHint="#80FFFFFF"
-        app:boxStrokeColor="#00E5FF"
-        app:hintTextColor="#00E5FF">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_state_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapWords"
-            android:textColor="@color/white" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:hint="@string/full_add"
-        android:textColorHint="#80FFFFFF"
-        app:boxStrokeColor="#00E5FF"
-        app:hintTextColor="#00E5FF">
+        android:hint="Complete address *"
+        android:textColorHint="@color/white_30"
+        app:boxStrokeColor="@color/accent"
+        app:hintTextColor="@color/accent"
+        app:layout_constraintTop_toBottomOf="@id/til_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_full_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top|start"
-            android:inputType="textMultiLine"
-            android:minLines="3"
+            android:textColor="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_landmark"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Nearby Landmark (optional)"
+        android:textColorHint="@color/white_30"
+        app:boxStrokeColor="@color/accent"
+        app:hintTextColor="@color/accent"
+        app:layout_constraintTop_toBottomOf="@id/til_address">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_landmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,8 +164,9 @@
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_done_button"
-        android:text="@string/save_add"
+        android:text="Save address"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/til_landmark" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
