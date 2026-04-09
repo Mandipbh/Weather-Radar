@@ -149,10 +149,9 @@
                     android:layout_height="48dp"
                     android:text="@string/view_details"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:backgroundTint="@color/accent"
-                    android:textSize="14sp"
-                    style="@style/Widget.MaterialComponents.Button" />
+                    android:background="@drawable/bg_done_button"
+                    app:backgroundTint="@null"
+                    android:textAllCaps="true" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

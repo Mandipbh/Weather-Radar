@@ -21,6 +21,7 @@ import com.example.theweatherapp.databinding.ActivityPickLocationBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
@@ -163,11 +164,8 @@ class PickLocationActivity : AppCompatActivity() {
         dialog.setContentView(view)
 
         val btnClose = view.findViewById<ImageButton>(R.id.btn_close)
-        val chipHome = view.findViewById<Chip>(R.id.chip_home)
-        val chipOffice = view.findViewById<Chip>(R.id.chip_office)
-        val chipOther = view.findViewById<Chip>(R.id.chip_other)
+        val cgAddressType = view.findViewById<ChipGroup>(R.id.cg_address_type)
         
-        val etReceiverName = view.findViewById<TextInputEditText>(R.id.et_receiver_name)
         val etFullAddress = view.findViewById<TextInputEditText>(R.id.et_full_address)
         val etLandmark = view.findViewById<TextInputEditText>(R.id.et_landmark)
         val btnSave = view.findViewById<Button>(R.id.btn_save_address)
@@ -175,23 +173,23 @@ class PickLocationActivity : AppCompatActivity() {
         // Pre-fill address
         etFullAddress.setText(currentFullAddress)
 
-        var selectedType = "Home"
-        chipHome.isChecked = true
-        chipHome.setOnClickListener { selectedType = "Home" }
-        chipOffice.setOnClickListener { selectedType = "Office" }
-        chipOther.setOnClickListener { selectedType = "Other" }
-
         btnClose.setOnClickListener { dialog.dismiss() }
 
         btnSave.setOnClickListener {
-            val name = etReceiverName.text.toString().trim()
             val addressText = etFullAddress.text.toString().trim()
             val landmark = etLandmark.text.toString().trim()
 
-            if (name.isNotEmpty() && addressText.isNotEmpty()) {
+            // Get selected chip text
+            val selectedChipId = cgAddressType.checkedChipId
+            val selectedType = if (selectedChipId != View.NO_ID) {
+                view.findViewById<Chip>(selectedChipId).text.toString()
+            } else {
+                "Home"
+            }
+
+            if (addressText.isNotEmpty()) {
                 weatherViewModel.addAddress(
                     addressType = selectedType,
-                    receiverName = name,
                     cityName = currentCity,
                     stateName = currentState,
                     pincode = currentPincode,
@@ -204,7 +202,6 @@ class PickLocationActivity : AppCompatActivity() {
                 finish() // Go back to ManageAddressActivity
                 Toast.makeText(this, "Address saved", Toast.LENGTH_SHORT).show()
             } else {
-                if (name.isEmpty()) etReceiverName.error = "Enter name"
                 if (addressText.isEmpty()) etFullAddress.error = "Enter address"
             }
         }

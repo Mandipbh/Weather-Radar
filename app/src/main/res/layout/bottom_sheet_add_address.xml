@@ -27,6 +27,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_drag_handle" />
 
+    <ImageButton
+        android:id="@+id/btn_close"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/close"
+        android:src="@drawable/ic_close"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:tint="@color/white_70" />
+
     <TextView
         android:id="@+id/tv_desc"
         android:layout_width="0dp"
@@ -34,19 +46,9 @@
         android:text="@string/complete_address"
         android:textColor="@color/white_70"
         android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@id/btn_close"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
-    <ImageButton
-        android:id="@+id/btn_close"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/bg_glass_circle"
-        android:src="@drawable/ic_grid"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_title"
-        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/tv_label_type"
@@ -67,10 +69,13 @@
         android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@id/tv_label_type">
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_address_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:singleLine="true"
+            app:singleSelection="true"
+            app:selectionRequired="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_home"
@@ -78,6 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:checkable="true"
+                android:checked="true"
                 android:text="@string/menu_home"
                 app:chipIcon="@drawable/ic_home" />
 
@@ -87,6 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:checkable="true"
                 android:text="@string/office"
                 app:chipIcon="@drawable/ic_distance" />
 
@@ -95,42 +103,24 @@
                 style="@style/Widget.App.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checkable="true"
                 android:text="@string/friend_home"
                 app:chipIcon="@drawable/ic_star" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Receiver's name *"
-        android:textColorHint="@color/white_30"
-        app:boxStrokeColor="@color/accent"
-        app:hintTextColor="@color/accent"
-        app:layout_constraintTop_toBottomOf="@id/hsv_types">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_receiver_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_address"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:hint="@string/complete_address_details"
         android:textColorHint="@color/white_30"
         app:boxStrokeColor="@color/accent"
         app:hintTextColor="@color/accent"
-        app:layout_constraintTop_toBottomOf="@id/til_name">
+        app:layout_constraintTop_toBottomOf="@id/hsv_types">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_full_address"
@@ -167,6 +157,8 @@
         android:text="@string/save_address"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/til_landmark" />
+        android:textAllCaps="true"
+        app:layout_constraintTop_toBottomOf="@id/til_landmark"
+        app:backgroundTint="@null" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

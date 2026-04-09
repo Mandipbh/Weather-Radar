@@ -241,6 +241,8 @@
             android:textSize="14sp"
             android:letterSpacing="0.08"
             android:background="@drawable/bg_done_button"
+            app:backgroundTint="@null"
+            android:textAllCaps="true"
             android:drawableStart="@drawable/ic_send_arrow"
             android:drawableTint="#FFFFFF"
             android:drawablePadding="10dp" />

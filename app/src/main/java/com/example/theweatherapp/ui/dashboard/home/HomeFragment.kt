@@ -2,6 +2,7 @@ package com.example.theweatherapp.ui.dashboard.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -71,7 +73,7 @@ class HomeFragment : Fragment() {
                     binding.tvLocationLine2.visibility = View.GONE
                 }
             } else {
-                binding.tvLocation.text = "Detecting Location..."
+                binding.tvLocation.text = getString(R.string.detecting_location)
                 binding.tvLocationLine2.text = ""
             }
         }
@@ -85,6 +87,12 @@ class HomeFragment : Fragment() {
         weatherViewModel.savedAddresses.observe(viewLifecycleOwner) { addresses ->
             savedAddressAdapter.updateList(addresses)
             binding.layoutSavedAddresses.visibility = if (addresses.isEmpty()) View.GONE else View.VISIBLE
+            
+            // If there's a selected address and no weather data yet, load it
+            val selected = addresses.find { it.isSelected }
+            if (selected != null && weatherViewModel.weatherData.value == null) {
+                weatherViewModel.selectAddress(selected)
+            }
         }
     }
 
@@ -98,9 +106,9 @@ class HomeFragment : Fragment() {
             addresses = emptyList(),
             onDeleteClick = { address -> weatherViewModel.deleteAddress(address) },
             onItemClick = { address ->
-                // When an address is clicked, fetch weather for the city
-                weatherViewModel.getWeather(address.cityName, "6397395029e04870817112041242311")
-                Toast.makeText(context, "Fetching weather for ${address.cityName}", Toast.LENGTH_SHORT).show()
+                // When an address is clicked, update selected state and fetch weather
+                weatherViewModel.selectAddress(address)
+                Toast.makeText(context, "Fetching weather for ${address.addressType}", Toast.LENGTH_SHORT).show()
             }
         )
         binding.rvSavedAddresses.adapter = savedAddressAdapter
@@ -110,6 +118,11 @@ class HomeFragment : Fragment() {
         binding.btnAdd.setOnClickListener {
             val intent = Intent(requireContext(), ManageAddressActivity::class.java)
             startActivity(intent)
+        }
+        
+        binding.btnTarget.setOnClickListener {
+             // Re-detect current GPS location
+             (activity as? DashboardActivity)?.requestLocation()
         }
     }
 
@@ -125,7 +138,12 @@ class HomeFragment : Fragment() {
 
     private fun setupSwipeRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            (activity as? DashboardActivity)?.requestLocation()
+            val selectedAddress = weatherViewModel.savedAddresses.value?.find { it.isSelected }
+            if (selectedAddress != null) {
+                weatherViewModel.selectAddress(selectedAddress)
+            } else {
+                (activity as? DashboardActivity)?.requestLocation()
+            }
         }
 
         binding.swipeRefreshLayout.setColorSchemeResources(
@@ -141,7 +159,12 @@ class HomeFragment : Fragment() {
         autoRefreshJob = viewLifecycleOwner.lifecycleScope.launch {
             while (isActive) {
                 delay(refreshInterval)
-                (activity as? DashboardActivity)?.requestLocation()
+                val selectedAddress = weatherViewModel.savedAddresses.value?.find { it.isSelected }
+                if (selectedAddress != null) {
+                    weatherViewModel.selectAddress(selectedAddress)
+                } else {
+                    (activity as? DashboardActivity)?.requestLocation()
+                }
             }
         }
     }
@@ -159,16 +182,80 @@ class HomeFragment : Fragment() {
         if (forecastDay != null) {
             binding.tvMinMax.text = "${forecastDay.day.minTempC.toInt()}°C / ${forecastDay.day.maxTempC.toInt()}°C"
             binding.tvRainChance.text = "${forecastDay.day.dailyChanceOfRain}%"
+            
+            // Update Sunrise and Sunset
+            binding.tvSunrise.text = forecastDay.astro.sunrise
+            binding.tvSunset.text = forecastDay.astro.sunset
+            
+            // Update Sun Progress Bar
+            updateSunProgress(forecastDay.astro.sunrise, forecastDay.astro.sunset, weather.location.localtime)
+            
             updateHourlyForecast(forecastDay.hour, weather.location.localtime)
         }
 
         binding.tvRealFeel.text = "Real Feel ${weather.current.feelslikeC.toInt()}°C"
-        binding.tvCurrentTime.text = weather.location.localtime
+        
+        // Format local time for display
+        try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+            val outputFormat = SimpleDateFormat("h:mm a · EEE, d MMM yyyy", Locale.US)
+            val date = inputFormat.parse(weather.location.localtime)
+            binding.tvCurrentTime.text = if (date != null) outputFormat.format(date) else weather.location.localtime
+        } catch (e: Exception) {
+            binding.tvCurrentTime.text = weather.location.localtime
+        }
 
         //navigate to radar screen
         binding.llRadar.setOnClickListener {
             val intent = Intent(requireContext(), RadarActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun updateSunProgress(sunriseStr: String, sunsetStr: String, localTimeStr: String) {
+        try {
+            val sunFormat = SimpleDateFormat("hh:mm a", Locale.US)
+            val localFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+            
+            val sunriseDate = sunFormat.parse(sunriseStr)
+            val sunsetDate = sunFormat.parse(sunsetStr)
+            
+            // Local time from API can sometimes be yyyy-MM-dd H:mm
+            val localDate = try {
+                localFormat.parse(localTimeStr)
+            } catch (e: Exception) {
+                SimpleDateFormat("yyyy-MM-dd H:mm", Locale.US).parse(localTimeStr)
+            }
+            
+            if (sunriseDate != null && sunsetDate != null && localDate != null) {
+                val cal = Calendar.getInstance()
+                
+                cal.time = sunriseDate
+                val sunriseMinutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)
+                
+                cal.time = sunsetDate
+                val sunsetMinutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)
+                
+                cal.time = localDate
+                val currentMinutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)
+                
+                val totalDaylightMinutes = sunsetMinutes - sunriseMinutes
+                
+                if (totalDaylightMinutes > 0) {
+                    val progress = when {
+                        currentMinutes <= sunriseMinutes -> 0
+                        currentMinutes >= sunsetMinutes -> 100
+                        else -> {
+                            val elapsed = currentMinutes - sunriseMinutes
+                            ((elapsed.toFloat() / totalDaylightMinutes) * 100).toInt()
+                        }
+                    }
+                    Log.d("SunProgress", "Sunrise: $sunriseMinutes, Sunset: $sunsetMinutes, Current: $currentMinutes, Progress: $progress")
+                    binding.pbSun.progress = progress
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("SunProgress", "Error updating sun progress", e)
         }
     }
 

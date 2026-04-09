@@ -55,11 +55,6 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_grid"
-                app:tint="@color/text_secondary" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -183,7 +178,9 @@
                 android:background="@drawable/bg_done_button"
                 android:text="@string/confirm_and_add_details"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                app:backgroundTint="@null" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

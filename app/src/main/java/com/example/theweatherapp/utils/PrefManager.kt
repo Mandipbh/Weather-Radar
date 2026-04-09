@@ -1,14 +1,19 @@
 package com.example.theweatherapp.utils
 
 import android.content.Context
+import com.example.theweatherapp.ui.dashboard.home.model.SavedAddress
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 object PrefManager {
 
     private const val PREF = "app_prefs"
+    private const val PREF_NAME = "app_prefs"
 
     // ===== EXISTING KEYS (DON'T BREAK) =====
     private const val KEY_LANG = "selected_language"
     private const val KEY_ONBOARDING_DONE = "onboarding_done"
+    private const val KEY_SAVED_ADDRESSES = "saved_addresses"
 
     // ===== NEW UNIT KEYS =====
     private const val KEY_UNIT_DONE = "unit_done"
@@ -94,5 +99,18 @@ object PrefManager {
     private fun getString(context: Context, key: String): String {
         return context.getSharedPreferences(PREF, Context.MODE_PRIVATE)
             .getString(key, "") ?: ""
+    }
+
+    fun saveAddresses(context: Context, addresses: List<SavedAddress>) {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val json = Gson().toJson(addresses)
+        prefs.edit().putString(KEY_SAVED_ADDRESSES, json).apply()
+    }
+
+    fun getAddresses(context: Context): List<SavedAddress> {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        val json = prefs.getString(KEY_SAVED_ADDRESSES, null) ?: return emptyList()
+        val type = object : TypeToken<List<SavedAddress>>() {}.type
+        return Gson().fromJson(json, type)
     }
 }

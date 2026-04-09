@@ -20,7 +20,6 @@ class SavedAddressAdapter(
         val ivTypeIcon: ImageView = view.findViewById(R.id.iv_type_icon)
         val tvAddressType: TextView = view.findViewById(R.id.tv_address_type)
         val tvFullAddress: TextView = view.findViewById(R.id.tv_full_address)
-        val tvReceiverDetails: TextView = view.findViewById(R.id.tv_receiver_details)
         val rbSelected: RadioButton = view.findViewById(R.id.rb_selected)
 
         init {
@@ -43,13 +42,14 @@ class SavedAddressAdapter(
         val item = addresses[position]
         
         holder.tvAddressType.text = item.addressType
+        // Show full address. Pincode is often part of fullAddress from Geocoder, 
+        // but we can append it if it's separate in our model and not in fullAddress.
         holder.tvFullAddress.text = item.fullAddress
-        holder.tvReceiverDetails.text = "${item.receiverName} | ${item.pincode}"
         holder.rbSelected.isChecked = item.isSelected
 
         val iconRes = when (item.addressType.lowercase()) {
             "home" -> R.drawable.ic_home
-            "office" -> R.drawable.ic_distance // Placeholder for work/office
+            "office" -> R.drawable.ic_distance
             else -> R.drawable.ic_location_pin
         }
         holder.ivTypeIcon.setImageResource(iconRes)

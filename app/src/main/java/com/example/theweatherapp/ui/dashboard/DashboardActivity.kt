@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.theweatherapp.R
 import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityDashboardBinding
@@ -36,10 +37,14 @@ import com.example.theweatherapp.ui.dashboard.notification.NotificationFragment
 import com.example.theweatherapp.ui.dashboard.privacyPolicy.PrivacyPolicyFragment
 import com.example.theweatherapp.ui.dashboard.proVersion.ProVersionFragment
 import com.example.theweatherapp.ui.dashboard.unitSetting.UnitSettingFragment
+import com.example.theweatherapp.utils.PrefManager
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.CancellationTokenSource
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 @AndroidEntryPoint
@@ -221,12 +226,19 @@ class DashboardActivity : BaseActivity() {
         val fineLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val coarseLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
+        // Check if there's already a selected address. If so, don't force GPS auto-detect on start.
+        val hasSelectedAddress = PrefManager.getAddresses(this).any { it.isSelected }
+
         if (!fineLocationGranted && !coarseLocationGranted) {
-            requestPermissionLauncher.launch(
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-            )
+            if (!hasSelectedAddress) {
+                requestPermissionLauncher.launch(
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                )
+            }
         } else {
-            checkLocationSettings()
+            if (!hasSelectedAddress) {
+                checkLocationSettings()
+            }
         }
     }
 
@@ -279,6 +291,7 @@ class DashboardActivity : BaseActivity() {
 
     @SuppressLint("MissingPermission")
     fun requestLocation() {
+        weatherViewModel.clearSelectedAddress() // Switch to GPS mode: clear manual address selection
         weatherViewModel.setLoading(true)
 
         if (!isLocationEnabled()) {
@@ -323,22 +336,24 @@ class DashboardActivity : BaseActivity() {
     }
 
     private fun updateAddress(latitude: Double, longitude: Double) {
-        val geocoder = Geocoder(this, Locale.getDefault())
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            geocoder.getFromLocation(latitude, longitude, 1) { addresses ->
-                if (addresses.isNotEmpty()) {
-                    processAddress(addresses[0])
+        lifecycleScope.launch(Dispatchers.IO) {
+            val geocoder = Geocoder(this@DashboardActivity, Locale.getDefault())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                geocoder.getFromLocation(latitude, longitude, 1) { addresses ->
+                    if (addresses.isNotEmpty()) {
+                        processAddress(addresses[0])
+                    }
                 }
-            }
-        } else {
-            @Suppress("DEPRECATION")
-            try {
-                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
-                if (!addresses.isNullOrEmpty()) {
-                    processAddress(addresses[0])
+            } else {
+                @Suppress("DEPRECATION")
+                try {
+                    val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                    if (!addresses.isNullOrEmpty()) {
+                        processAddress(addresses[0])
+                    }
+                } catch (e: Exception) {
+                    Log.e("DashboardActivity", "Geocoder error", e)
                 }
-            } catch (e: Exception) {
-                Log.e("DashboardActivity", "Geocoder error", e)
             }
         }
     }
@@ -358,14 +373,13 @@ class DashboardActivity : BaseActivity() {
         val fullAddress = if (line2.isNotEmpty()) "$line1|$line2" else line1
 
         Log.d("DashboardActivity", "Resolved Address: $fullAddress")
-        runOnUiThread {
+        lifecycleScope.launch(Dispatchers.Main) {
             weatherViewModel.setAddress(fullAddress)
         }
     }
 
     private fun fetchWeather(query: String) {
-        val apiKey = "e2ea45395b5f4367bc9135347260204"
-        weatherViewModel.getWeather(query, apiKey)
+        weatherViewModel.getWeather(query)
     }
 
     override fun onDestroy() {

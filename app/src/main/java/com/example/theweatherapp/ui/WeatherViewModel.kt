@@ -31,12 +31,13 @@ class WeatherViewModel @Inject constructor(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
+    val WEATHER_API_KEY = "e2ea45395b5f4367bc9135347260204"
+
     // Saved Addresses from Repository
     val savedAddresses: LiveData<List<SavedAddress>> = addressRepository.savedAddresses
 
     fun addAddress(
         addressType: String,
-        receiverName: String,
         cityName: String,
         stateName: String,
         pincode: String,
@@ -50,7 +51,6 @@ class WeatherViewModel @Inject constructor(
         
         val newAddress = SavedAddress(
             addressType = addressType,
-            receiverName = receiverName,
             cityName = cityName,
             stateName = stateName,
             pincode = pincode,
@@ -61,19 +61,38 @@ class WeatherViewModel @Inject constructor(
             isSelected = isFirst
         )
         addressRepository.addAddress(newAddress)
+        
+        if (isFirst) {
+            selectAddress(newAddress)
+        }
     }
 
     fun selectAddress(address: SavedAddress) {
         addressRepository.selectAddress(address)
-        // Optionally trigger weather fetch for selected address
-        getWeather(address.cityName, "e2ea45395b5f4367bc9135347260204")
+        
+        // Update currentAddress display
+        val displayAddress = "${address.addressType}: ${address.fullAddress}|${address.cityName}, ${address.stateName}"
+        setAddress(displayAddress)
+        
+        // Trigger weather fetch
+        val query = if (address.latitude != 0.0 && address.longitude != 0.0) {
+            "${address.latitude},${address.longitude}"
+        } else {
+            address.cityName
+        }
+        
+        getWeather(query, WEATHER_API_KEY)
+    }
+
+    fun clearSelectedAddress() {
+        addressRepository.clearSelection()
     }
 
     fun deleteAddress(savedAddress: SavedAddress) {
         addressRepository.deleteAddress(savedAddress)
     }
 
-    fun setAddress(address: String) {
+    fun setAddress(address: String?) {
         _currentAddress.postValue(address)
     }
     
@@ -81,7 +100,7 @@ class WeatherViewModel @Inject constructor(
         _isLoading.postValue(loading)
     }
 
-    fun getWeather(query: String, apiKey: String) {
+    fun getWeather(query: String, apiKey: String = WEATHER_API_KEY) {
         Log.d("WeatherViewModel", "Fetching weather for $query...")
         setLoading(true)
         _error.value = null

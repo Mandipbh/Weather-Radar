@@ -26,6 +26,7 @@
                 android:paddingEnd="14dp">
 
                 <LinearLayout
+                    android:id="@+id/ll_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -33,7 +34,10 @@
                     android:layout_marginEnd="15dp"
                     android:layout_toStartOf="@id/btn_add"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
 
                     <TextView
                         android:id="@+id/tv_location"
@@ -72,7 +76,6 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/layout_dots"
                 android:layout_width="wrap_content"
                 android:layout_height="12dp"
                 android:layout_below="@id/layout_header"
@@ -85,7 +88,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/layout_dots">
+                android:layout_below="@id/layout_header"
+                android:layout_marginTop="12dp">
 
                 <LinearLayout
                     android:id="@+id/layout_right_icons"
@@ -356,6 +360,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_sunrise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/morning_time"
@@ -373,6 +378,7 @@
                             android:textSize="11sp" />
 
                         <TextView
+                            android:id="@+id/tv_sunset"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/evening_time"

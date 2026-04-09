@@ -1,6 +1,7 @@
 package com.example.theweatherapp.ui.unitSetting
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import com.example.theweatherapp.R
 import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityUnitSettingBinding
 import com.example.theweatherapp.ui.dashboard.DashboardActivity
@@ -20,6 +22,7 @@ class UnitSettingActivity : BaseActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             saveAll(isGranted)
+            saveNotificationPreference(isGranted)
             navigate()
         }
 
@@ -76,18 +79,31 @@ class UnitSettingActivity : BaseActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 saveAll(true)
+                saveNotificationPreference(true)
                 navigate()
             } else {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {
             saveAll(true)
+            saveNotificationPreference(true)
             navigate()
         }
     }
 
+    private fun saveNotificationPreference(enabled: Boolean) {
+        val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        prefs.edit()
+            .putBoolean("notifications_enabled", enabled)
+            .putBoolean("notification_permission_handled", true)
+            .apply()
+    }
+
     private fun navigate() {
-        startActivity(Intent(this, DashboardActivity::class.java))
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
+        // Add a smooth transition animation
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         finish()
     }
 }
