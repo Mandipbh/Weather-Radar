@@ -52,6 +52,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/tv_premium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/premium"
@@ -143,6 +144,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btn_view_details"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="@string/view_details"

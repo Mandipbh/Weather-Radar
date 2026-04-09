@@ -29,7 +29,7 @@
     <string name="mm_hg">mmHg</string>
     <string name="h_pa">hPa</string>
     <string name="atm">atm</string>
-    <string name="m_bar">m_bar</string>
+    <string name="m_bar">mBar</string>
     <string name="in_hg">inHg</string>
     <string name="k_pa">kPa</string>
     <string name="ongoing_notification">Ongoing Notification</string>
@@ -60,6 +60,10 @@
     <string name="menu_language">Language</string>
     <string name="menu_feedback">Feedback &amp; Suggestions</string>
     <string name="menu_developer">DEVELOPER</string>
+    <string name="menu_rate_me">Rate me</string>
+    <string name="menu_report_a_problem">Report a problem</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_privacy_policy">Privacy policy</string>
     <string name="now">Now</string>
     <string name="seventeen">17</string>
     <string name="city_state">City, State</string>
@@ -110,4 +114,24 @@
     <string name="humidity">Humidity</string>
     <string name="cloudy">Cloudy</string>
     <string name="snow">Snow</string>
+    <string name="enable_notification">Enable Notifications</string>
+    <string name="icons">Icons</string>
+    <string name="widgets">Widgets</string>
+    <string name="background">Background</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="confirm_your_order">Confirm your order delivery location</string>
+    <string name="detecting">Detecting...</string>
+    <string name="confirm_and_add_details">Confirm and add details</string>
+    <string name="move_pin_to_set_your_exact_location">Move pin to set your exact location</string>
+    <string name="search_for_delivery_area">Search for delivery area</string>
+    <string name="address_details">Address details</string>
+    <string name="complete_address">Complete address would assist better us in serving you</string>
+    <string name="select_address_type">Select address type</string>
+    <string name="office">Office</string>
+    <string name="friend_home">Friend\'s house</string>
+    <string name="complete_address_details">Complete address *</string>
+    <string name="nearby_landmark">Nearby Landmark (optional)</string>
+    <string name="save_address">Save address</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

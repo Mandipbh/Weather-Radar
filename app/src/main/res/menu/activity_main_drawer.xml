@@ -46,13 +46,34 @@
             android:title="@string/menu_language" />
 
         <item
+            android:title="@string/menu_developer"
+            android:enabled="false"
+            android:id="@+id/nav_developer_header" />
+
+        <item
+            android:id="@+id/nav_rate_me"
+            android:icon="@drawable/ic_star"
+            android:title="@string/menu_rate_me" />
+
+        <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_feedback"
             android:title="@string/menu_feedback" />
 
         <item
-            android:title="@string/menu_developer"
-            android:enabled="false"
-            android:id="@+id/nav_developer_header" />
+            android:id="@+id/nav_report_a_problem"
+            android:icon="@drawable/ic_bug"
+            android:title="@string/menu_report_a_problem" />
+
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_share"
+            android:title="@string/menu_share" />
+
+        <item
+            android:id="@+id/nav_privacy_policy"
+            android:icon="@drawable/ic_privacy_policy"
+            android:title="@string/menu_privacy_policy" />
+
     </group>
 </menu>

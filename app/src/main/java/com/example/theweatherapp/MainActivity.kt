@@ -10,8 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityMainBinding
+import com.example.theweatherapp.ui.dashboard.DashboardActivity
 import com.example.theweatherapp.ui.unitSetting.UnitSettingActivity
 import com.example.theweatherapp.utils.AdManager
+import com.example.theweatherapp.utils.PrefManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,9 +84,13 @@ class MainActivity : BaseActivity() {
         handler.removeCallbacks(timeoutRunnable)
         
         Log.d("MainActivity", "Navigating to UnitSettingActivity")
-        val intent = Intent(this, UnitSettingActivity::class.java)
-        startActivity(intent)
-        finish()
+        if (!PrefManager.isOnboardingDone(this)) {
+            startActivity(Intent(this, UnitSettingActivity::class.java))
+            finish()
+        } else {
+            startActivity(Intent(this, DashboardActivity::class.java))
+            finish()
+        }
     }
 
     override fun onDestroy() {

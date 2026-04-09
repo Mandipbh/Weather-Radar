@@ -30,7 +30,7 @@
     <string name="mm_hg">mmHg</string>
     <string name="h_pa">hPa</string>
     <string name="atm">atm</string>
-    <string name="m_bar">mbar</string>
+    <string name="m_bar">mBar</string>
     <string name="in_hg">inHg</string>
     <string name="k_pa">kPa</string>
     <string name="ongoing_notification">चालू सूचना</string>
@@ -61,6 +61,10 @@
     <string name="menu_language">भाषा</string>
     <string name="menu_feedback">फीडबैक और सुझाव</string>
     <string name="menu_developer">डेवलपर</string>
+    <string name="menu_rate_me">Rate me</string>
+    <string name="menu_report_a_problem">Report a problem</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_privacy_policy">Privacy policy</string>
     <string name="now">अभी</string>
     <string name="seventeen">17</string>
     <string name="city_state">शहर, राज्य</string>

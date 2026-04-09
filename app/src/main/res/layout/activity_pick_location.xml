@@ -49,7 +49,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="Search for delivery area"
+                android:hint="@string/search_for_delivery_area"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:textColor="@color/black"
@@ -84,7 +84,7 @@
             android:paddingTop="6dp"
             android:paddingEnd="12dp"
             android:paddingBottom="6dp"
-            android:text="Move pin to set your exact location"
+            android:text="@string/move_pin_to_set_your_exact_location"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:layout_marginBottom="8dp"/>
@@ -130,7 +130,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Confirm your order delivery location"
+                android:text="@string/confirm_your_order"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
 
@@ -158,7 +158,7 @@
                         android:id="@+id/tv_picked_address_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Detecting..."
+                        android:text="@string/detecting"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -181,7 +181,7 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_done_button"
-                android:text="Confirm and add details"
+                android:text="@string/confirm_and_add_details"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>

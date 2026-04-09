@@ -22,14 +22,20 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import com.example.theweatherapp.R
 import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityDashboardBinding
+import com.example.theweatherapp.databinding.NavHeaderDashboardBinding
 import com.example.theweatherapp.ui.WeatherViewModel
-import com.example.theweatherapp.ui.dashboard.customise.CustomiseActivity
+import com.example.theweatherapp.ui.dashboard.customise.CustomiseFragment
 import com.example.theweatherapp.ui.dashboard.feedback.FeedbackFragment
 import com.example.theweatherapp.ui.dashboard.home.HomeFragment
 import com.example.theweatherapp.ui.dashboard.language.LanguageFragment
+import com.example.theweatherapp.ui.dashboard.notification.NotificationFragment
+import com.example.theweatherapp.ui.dashboard.privacyPolicy.PrivacyPolicyFragment
+import com.example.theweatherapp.ui.dashboard.proVersion.ProVersionFragment
+import com.example.theweatherapp.ui.dashboard.unitSetting.UnitSettingFragment
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.CancellationTokenSource
@@ -92,63 +98,125 @@ class DashboardActivity : BaseActivity() {
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        binding.navView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.nav_home -> {
-                    supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                            R.anim.slide_in_right,
-                            R.anim.fade_out,
-                            R.anim.fade_in,
-                            R.anim.slide_out_right
-                        )
-                        .replace(R.id.nav_host_fragment_content_dashboard, HomeFragment())
-                        .commit()
-                }
-                R.id.nav_customise -> {
-                    startActivity(Intent(this, CustomiseActivity::class.java))
-                }
-                R.id.nav_language -> {
-                    openLanguageFragment()
-                }
-                R.id.nav_feedback -> {
-                    openFeedbackFragment()
-                }
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
+        binding.navView.setNavigationItemSelectedListener { item ->
+            handleDrawerNavigation(item.itemId)
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
             true
+        }
+
+        val headerView = binding.navView.getHeaderView(0)
+        val headerBinding = NavHeaderDashboardBinding.bind(headerView)
+
+        headerBinding.btnViewDetails.setOnClickListener {
+            navigateFragment(ProVersionFragment(), "Pro")
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        headerBinding.tvPremium.setOnClickListener {
+            navigateFragment(ProVersionFragment(), "Pro")
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
 
         checkLocationPermissions()
     }
 
-    private fun openLanguageFragment() {
-        val fragment = LanguageFragment()
-        supportFragmentManager.beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_right,
-                R.anim.fade_out,
-                R.anim.fade_in,
-                R.anim.slide_out_right
-            )
-            .replace(R.id.nav_host_fragment_content_dashboard, fragment)
-            .addToBackStack(null)
-            .commit()
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            return
+        }
+
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
     }
 
-    private fun openFeedbackFragment() {
-        val fragment = FeedbackFragment()
-        supportFragmentManager.beginTransaction()
+    private fun handleDrawerNavigation(itemId: Int) {
+        when (itemId) {
+
+            R.id.nav_home -> navigateFragment(HomeFragment(), "Home", addToBack = false)
+
+            R.id.nav_customise ->
+                navigateFragment(CustomiseFragment(), "Customise")
+
+            R.id.nav_unit_preference ->
+                navigateFragment(UnitSettingFragment(), "Unit")
+
+            R.id.nav_language -> navigateFragment(LanguageFragment(), "Language")
+
+            R.id.nav_feedback,
+            R.id.nav_report_a_problem -> navigateFragment(FeedbackFragment(), "Feedback")
+
+            R.id.nav_notification -> navigateFragment(NotificationFragment(), "Notification")
+
+            R.id.nav_privacy_policy -> navigateFragment(PrivacyPolicyFragment(), "Privacy")
+
+            R.id.nav_pro -> navigateFragment(ProVersionFragment(), "Pro")
+
+            R.id.nav_rate_me -> rateApp()
+
+            R.id.nav_share -> shareApp()
+        }
+    }
+
+    private fun navigateFragment(
+        fragment: Fragment,
+        tag: String,
+        addToBack: Boolean = true
+    ) {
+        val fm = supportFragmentManager
+
+        val currentFragment =
+            fm.findFragmentById(R.id.nav_host_fragment_content_dashboard)
+
+        if (currentFragment?.javaClass == fragment.javaClass) return
+
+        val transaction = fm.beginTransaction()
             .setCustomAnimations(
                 R.anim.slide_in_right,
                 R.anim.fade_out,
                 R.anim.fade_in,
                 R.anim.slide_out_right
             )
-            .replace(R.id.nav_host_fragment_content_dashboard, fragment)
-            .addToBackStack(null)
-            .commit()
+            .replace(R.id.nav_host_fragment_content_dashboard, fragment, tag)
+
+        if (addToBack) {
+            transaction.addToBackStack(tag)
+        } else {
+            fm.popBackStack(null, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+
+        transaction.commit()
     }
+
+    private fun rateApp() {
+        try {
+            startActivity(
+                Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+            )
+        } catch (e: Exception) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                )
+            )
+        }
+    }
+
+    private fun shareApp() {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "https://play.google.com/store/apps/details?id=$packageName"
+            )
+        }
+        startActivity(Intent.createChooser(intent, "Share via"))
+    }
+
     private fun checkLocationPermissions() {
         val fineLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val coarseLocationGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -212,7 +280,7 @@ class DashboardActivity : BaseActivity() {
     @SuppressLint("MissingPermission")
     fun requestLocation() {
         weatherViewModel.setLoading(true)
-        
+
         if (!isLocationEnabled()) {
             Toast.makeText(this, "Please enable location services", Toast.LENGTH_SHORT).show()
             weatherViewModel.setLoading(false)
@@ -223,7 +291,7 @@ class DashboardActivity : BaseActivity() {
         cancellationTokenSource = CancellationTokenSource()
 
         Log.d("DashboardActivity", "Requesting current accurate location...")
-        
+
         fusedLocationClient.getCurrentLocation(
             Priority.PRIORITY_HIGH_ACCURACY,
             cancellationTokenSource.token
@@ -278,13 +346,13 @@ class DashboardActivity : BaseActivity() {
     private fun processAddress(address: android.location.Address) {
         // Line 1: Detailed address (Full Address Line)
         val line1 = address.getAddressLine(0) ?: ""
-        
+
         // Line 2: City, State, Pincode
         val parts = mutableListOf<String>()
         address.locality?.let { parts.add(it) } // City
         address.adminArea?.let { parts.add(it) } // State
         address.postalCode?.let { parts.add(it) } // Pincode
-        
+
         val line2 = parts.joinToString(", ")
 
         val fullAddress = if (line2.isNotEmpty()) "$line1|$line2" else line1

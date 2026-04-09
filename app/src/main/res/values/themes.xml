@@ -1,11 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.TheWeatherApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
+
+        <!-- Colors -->
         <item name="colorPrimary">@color/accent</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:windowBackground">@color/bg_light</item>
         <item name="colorPrimaryVariant">@color/primary_dark_blue</item>
+
+        <item name="android:fontFamily">@font/roboto_family</item>
+        <item name="fontFamily">@font/roboto_family</item>
+
     </style>
 
     <style name="Theme.TheWeatherApp" parent="Base.Theme.TheWeatherApp" />
@@ -22,7 +27,7 @@
     <style name="CustomTextStyle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">@font/roboto_family</item>
     </style>
 
     <!-- Custom TextInput Card Style -->

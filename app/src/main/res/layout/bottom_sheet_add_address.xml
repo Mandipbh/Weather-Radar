@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Address details"
+        android:text="@string/address_details"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -31,7 +31,7 @@
         android:id="@+id/tv_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Complete address would assist better us in serving you"
+        android:text="@string/complete_address"
         android:textColor="@color/white_70"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@id/btn_close"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Select address type"
+        android:text="@string/select_address_type"
         android:textColor="@color/white_70"
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Home"
+                android:text="@string/menu_home"
                 app:chipIcon="@drawable/ic_home" />
 
             <com.google.android.material.chip.Chip
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Office"
+                android:text="@string/office"
                 app:chipIcon="@drawable/ic_distance" />
 
             <com.google.android.material.chip.Chip
@@ -95,7 +95,7 @@
                 style="@style/Widget.App.Chip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Friend's house"
+                android:text="@string/friend_home"
                 app:chipIcon="@drawable/ic_star" />
 
         </LinearLayout>
@@ -126,7 +126,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="Complete address *"
+        android:hint="@string/complete_address_details"
         android:textColorHint="@color/white_30"
         app:boxStrokeColor="@color/accent"
         app:hintTextColor="@color/accent"
@@ -145,7 +145,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:hint="Nearby Landmark (optional)"
+        android:hint="@string/nearby_landmark"
         android:textColorHint="@color/white_30"
         app:boxStrokeColor="@color/accent"
         app:hintTextColor="@color/accent"
@@ -164,7 +164,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_done_button"
-        android:text="Save address"
+        android:text="@string/save_address"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/til_landmark" />

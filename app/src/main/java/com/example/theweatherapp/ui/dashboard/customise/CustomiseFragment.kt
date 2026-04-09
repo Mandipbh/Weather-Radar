@@ -2,55 +2,52 @@ package com.example.theweatherapp.ui.dashboard.customise
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.theweatherapp.base.BaseActivity
-import com.example.theweatherapp.databinding.ActivityCustomiseBinding
+import com.example.theweatherapp.databinding.FragmentCustomiseBinding
+import com.example.theweatherapp.databinding.FragmentLanguageBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import com.example.theweatherapp.ui.dashboard.customise.model.WidgetPreview
 import com.example.theweatherapp.ui.dashboard.customise.model.WidgetType
 import com.google.android.material.tabs.TabLayout
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class CustomiseActivity : BaseActivity() {
+class CustomiseFragment : Fragment() {
 
-    private lateinit var binding: ActivityCustomiseBinding
-    private val weatherViewModel: WeatherViewModel by viewModels()
+    private var _binding: FragmentCustomiseBinding? = null
+    private val binding get() = _binding!!
+
+    private val weatherViewModel: WeatherViewModel by activityViewModels()
     private lateinit var adapter: WidgetsAdapter
     private var selectedWidgetId: Int = 1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCustomiseBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        // Load saved selection
-        val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        selectedWidgetId = prefs.getInt("selected_widget_id", 1)
-
-        setupToolbar()
-        setupTabs()
-        setupRecyclerView()
-        
-        // Initial load to show widgets even before weather data arrives
-        loadWidgets()
-        
-        observeViewModel()
-        setupAds()
-        
-        // If data is null, try to fetch it
-        if (weatherViewModel.weatherData.value == null) {
-            val apiKey = "e2ea45395b5f4367bc9135347260204"
-            weatherViewModel.getWeather("auto:ip", apiKey)
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentCustomiseBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    private fun setupToolbar() {
-        binding.btnBack.setOnClickListener {
-            finish()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _binding = FragmentCustomiseBinding.bind(view)
+
+        val prefs = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        selectedWidgetId = prefs.getInt("selected_widget_id", 1)
+
+        setupTabs()
+        setupRecyclerView()
+        loadWidgets()
+        observeViewModel()
+        setupAds()
+
+        if (weatherViewModel.weatherData.value == null) {
+            val apiKey = "YOUR_API_KEY"
+            weatherViewModel.getWeather("auto:ip", apiKey)
         }
     }
 
@@ -58,7 +55,7 @@ class CustomiseActivity : BaseActivity() {
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    1 -> { // Widgets
+                    1 -> {
                         binding.rvWidgets.visibility = View.VISIBLE
                         binding.tvPlaceholder.visibility = View.GONE
                     }
@@ -74,34 +71,34 @@ class CustomiseActivity : BaseActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        // Select Widgets tab by default
         binding.tabLayout.getTabAt(1)?.select()
     }
 
     private fun setupRecyclerView() {
         adapter = WidgetsAdapter(
             widgets = emptyList(),
-            onWidgetSelected = { selectedWidget ->
-                updateSelection(selectedWidget.id)
+            onWidgetSelected = {
+                updateSelection(it.id)
             },
             onRefreshClicked = {
-                val apiKey = "e2ea45395b5f4367bc9135347260204"
+                val apiKey = "YOUR_API_KEY"
                 val location = weatherViewModel.weatherData.value?.location?.name ?: "auto:ip"
                 weatherViewModel.getWeather(location, apiKey)
             }
         )
-        binding.rvWidgets.layoutManager = LinearLayoutManager(this)
+
+        binding.rvWidgets.layoutManager = LinearLayoutManager(requireContext())
         binding.rvWidgets.adapter = adapter
     }
 
     private fun observeViewModel() {
-        weatherViewModel.weatherData.observe(this) { response ->
-            adapter.setWeatherData(response)
+        weatherViewModel.weatherData.observe(viewLifecycleOwner) {
+            adapter.setWeatherData(it)
             loadWidgets()
         }
 
-        weatherViewModel.currentAddress.observe(this) { address ->
-            adapter.setCurrentAddress(address)
+        weatherViewModel.currentAddress.observe(viewLifecycleOwner) {
+            adapter.setCurrentAddress(it)
             loadWidgets()
         }
     }
@@ -117,15 +114,17 @@ class CustomiseActivity : BaseActivity() {
 
     private fun updateSelection(id: Int) {
         selectedWidgetId = id
-        
-        // Save to preferences
-        val prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+
+        val prefs = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         prefs.edit().putInt("selected_widget_id", id).apply()
-        
+
         loadWidgets()
     }
 
-    private fun setupAds() {
-        // Banner ad integration logic
+    private fun setupAds() {}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

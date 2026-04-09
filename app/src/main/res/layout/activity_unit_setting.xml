@@ -70,7 +70,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:fontFamily="sans-serif-medium"
             android:letterSpacing="0.03"
             android:text="@string/unit_setting"
             android:textColor="@color/white"
@@ -177,6 +176,7 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipTemp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:selectionRequired="true"
@@ -186,7 +186,6 @@
                                 style="@style/Widget.App.Chip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:checked="true"
                                 android:text="@string/c" />
 
                             <com.google.android.material.chip.Chip
@@ -225,6 +224,7 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:selectionRequired="true"
@@ -272,6 +272,7 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipPrecip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:selectionRequired="true"
@@ -319,6 +320,7 @@
                             android:textStyle="bold" />
 
                         <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipDistance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:selectionRequired="true"
@@ -606,13 +608,15 @@
         android:layout_height="56dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/bg_done_button"
         android:letterSpacing="0.08"
         android:text="@string/save_preferences"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/scrollSettings"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
