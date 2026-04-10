@@ -13,10 +13,10 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.theweatherapp.R
+import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityPickLocationBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -38,7 +38,7 @@ import kotlinx.coroutines.withContext
 import java.util.Locale
 
 @AndroidEntryPoint
-class PickLocationActivity : AppCompatActivity() {
+class PickLocationActivity : BaseActivity() {
 
     private lateinit var binding: ActivityPickLocationBinding
     private val weatherViewModel: WeatherViewModel by viewModels()

@@ -6,6 +6,17 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:windowBackground">@color/bg_light</item>
         <item name="colorPrimaryVariant">@color/primary_dark_blue</item>
+
+        <!-- Status Bar & Navigation Bar Customization (Full Screen / Transparent) -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <!-- White status bar icons for dark backgrounds -->
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Full screen mode -->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="Theme.TheWeatherApp" parent="Base.Theme.TheWeatherApp" />
@@ -21,7 +32,7 @@
     <!-- Custom TextView Style -->
     <style name="CustomTextStyle" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">16sp</item>
         <item name="android:fontFamily">@font/roboto_family</item>
         <item name="fontFamily">@font/roboto_family</item>
     </style>
@@ -51,7 +62,7 @@
         <item name="chipStrokeColor">@color/chip_stroke_selector</item>
         <item name="chipStrokeWidth">1.5dp</item>
         <item name="chipCornerRadius">20dp</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">13sp</item>
         <item name="android:textStyle">bold</item>
         <item name="chipMinHeight">36dp</item>
         <item name="chipStartPadding">12dp</item>
@@ -83,7 +94,7 @@
 
     <style name="RowLabel">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize" tools:ignore="SpUsage">15sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

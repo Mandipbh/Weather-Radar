@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.theweatherapp.base.BaseActivity
 import com.example.theweatherapp.databinding.ActivityManageAddressBinding
 import com.example.theweatherapp.ui.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ManageAddressActivity : AppCompatActivity() {
+class ManageAddressActivity : BaseActivity() {
 
     private lateinit var binding: ActivityManageAddressBinding
     private val weatherViewModel: WeatherViewModel by viewModels()
@@ -44,7 +43,7 @@ class ManageAddressActivity : AppCompatActivity() {
                 Toast.makeText(this, "Selected ${address.addressType}", Toast.LENGTH_SHORT).show()
             }
         )
-        binding.rvAddresses.layoutManager = LinearLayoutManager(this)
+        binding.rvAddresses.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         binding.rvAddresses.adapter = adapter
     }
 
