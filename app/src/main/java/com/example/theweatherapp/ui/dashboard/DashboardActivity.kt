@@ -35,11 +35,13 @@ import com.example.theweatherapp.ui.WeatherViewModel
 import com.example.theweatherapp.ui.dashboard.customise.CustomiseFragment
 import com.example.theweatherapp.ui.dashboard.feedback.FeedbackFragment
 import com.example.theweatherapp.ui.dashboard.home.HomeFragment
+import com.example.theweatherapp.ui.dashboard.home.PickLocationActivity
 import com.example.theweatherapp.ui.dashboard.language.LanguageFragment
 import com.example.theweatherapp.ui.dashboard.notification.NotificationFragment
 import com.example.theweatherapp.ui.dashboard.privacyPolicy.PrivacyPolicyFragment
 import com.example.theweatherapp.ui.dashboard.proVersion.ProVersionFragment
 import com.example.theweatherapp.ui.dashboard.unitSetting.UnitSettingFragment
+import com.example.theweatherapp.ui.radar.RadarActivity
 import com.example.theweatherapp.utils.PrefManager
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -175,6 +177,10 @@ class DashboardActivity : BaseActivity() {
             R.id.nav_rate_me -> rateApp()
 
             R.id.nav_share -> shareApp()
+
+            R.id.nav_radar -> {
+                startActivity(Intent(this, RadarActivity::class.java))
+            }
         }
     }
 
