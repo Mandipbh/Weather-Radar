@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
@@ -22,6 +23,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.theweatherapp.R
@@ -54,7 +57,6 @@ class DashboardActivity : BaseActivity() {
     private val weatherViewModel: WeatherViewModel by viewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var cancellationTokenSource = CancellationTokenSource()
-
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -87,6 +89,16 @@ class DashboardActivity : BaseActivity() {
 
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.btnOpenDrawer) { view, insets ->
+            val topInset = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
+
+            val params = view.layoutParams as ViewGroup.MarginLayoutParams
+            params.topMargin = topInset
+            view.layoutParams = params
+
+            insets
+        }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
