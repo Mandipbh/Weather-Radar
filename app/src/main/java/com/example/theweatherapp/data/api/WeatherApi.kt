@@ -8,7 +8,7 @@ interface WeatherApi {
     suspend fun getForecast(
         @Query("q") query: String,
         @Query("key") apiKey: String,
-        @Query("days") days: Int = 1,
+        @Query("days") days: Int = 10,
         @Query("aqi") aqi: String = "yes",
         @Query("alerts") alerts: String = "yes"
     ): WeatherResponse

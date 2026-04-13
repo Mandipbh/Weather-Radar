@@ -42,7 +42,19 @@ data class Current(
     @SerializedName("vis_miles") val visMiles: Double,
     @SerializedName("uv") val uv: Double,
     @SerializedName("gust_mph") val gustMph: Double,
-    @SerializedName("gust_kph") val gustKph: Double
+    @SerializedName("gust_kph") val gustKph: Double,
+    @SerializedName("air_quality") val airQuality: AirQuality? = null
+)
+
+data class AirQuality(
+    @SerializedName("co") val co: Double,
+    @SerializedName("no2") val no2: Double,
+    @SerializedName("o3") val o3: Double,
+    @SerializedName("so2") val so2: Double,
+    @SerializedName("pm2_5") val pm25: Double,
+    @SerializedName("pm10") val pm10: Double,
+    @SerializedName("us-epa-index") val usEpaIndex: Int,
+    @SerializedName("gb-defra-index") val gbDefraIndex: Int
 )
 
 data class Condition(
@@ -82,7 +94,8 @@ data class Day(
     @SerializedName("daily_will_it_snow") val dailyWillItSnow: Int,
     @SerializedName("daily_chance_of_snow") val dailyChanceOfSnow: Int,
     @SerializedName("condition") val condition: Condition,
-    @SerializedName("uv") val uv: Double
+    @SerializedName("uv") val uv: Double,
+    @SerializedName("air_quality") val airQuality: AirQuality? = null
 )
 
 data class Astro(

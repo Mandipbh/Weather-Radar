@@ -1,16 +1,21 @@
 package com.example.theweatherapp.ui.dashboard.home
 
+import android.appwidget.AppWidgetManager
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.theweatherapp.R
 import com.example.theweatherapp.data.api.WeatherResponse
 import com.example.theweatherapp.databinding.FragmentHomeBinding
@@ -72,9 +77,13 @@ class HomeFragment : Fragment() {
                 } else {
                     binding.tvLocationLine2.visibility = View.GONE
                 }
+                
+                // Update AQI station label with current city
+                binding.tvCurrentAqiLocation.text = parts[0]
             } else {
                 binding.tvLocation.text = getString(R.string.detecting_location)
                 binding.tvLocationLine2.text = ""
+                binding.tvCurrentAqiLocation.text = getString(R.string.detecting)
             }
         }
 
@@ -116,13 +125,41 @@ class HomeFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.btnAdd.setOnClickListener {
-            val intent = Intent(requireContext(), ManageAddressActivity::class.java)
+            val intent = Intent(requireContext(), PickLocationActivity::class.java)
             startActivity(intent)
         }
         
         binding.btnTarget.setOnClickListener {
              // Re-detect current GPS location
              (activity as? DashboardActivity)?.requestLocation()
+        }
+
+        binding.btnSeeMore.setOnClickListener {
+            // Logic to navigate to customise or show more widgets
+            Toast.makeText(requireContext(), "Opening customisation...", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.btnAddWidget.setOnClickListener {
+            requestPinWidget()
+        }
+
+        binding.btnViewDetailsAurora.setOnClickListener {
+            Toast.makeText(requireContext(), "Opening Aurora Details...", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun requestPinWidget() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val appWidgetManager = requireContext().getSystemService(AppWidgetManager::class.java)
+            // Note: In a real app, you'd provide your actual AppWidgetProvider class here
+            // val myProvider = ComponentName(requireContext(), WeatherWidget::class.java)
+            // if (appWidgetManager.isRequestPinAppWidgetSupported) {
+            //     appWidgetManager.requestPinAppWidget(myProvider, null, null)
+            // } else {
+                Toast.makeText(requireContext(), "Please add widget from your launcher", Toast.LENGTH_LONG).show()
+            // }
+        } else {
+            Toast.makeText(requireContext(), "Widget pinning not supported", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -178,23 +215,61 @@ class HomeFragment : Fragment() {
         binding.tvCondition.text = weather.current.condition.text.uppercase()
         binding.tvTemperature.text = weather.current.tempC.toInt().toString()
 
-        val forecastDay = weather.forecast?.forecastday?.firstOrNull()
-        if (forecastDay != null) {
-            binding.tvMinMax.text = "${forecastDay.day.minTempC.toInt()}°C / ${forecastDay.day.maxTempC.toInt()}°C"
-            binding.tvRainChance.text = "${forecastDay.day.dailyChanceOfRain}%"
+        val forecastDays = weather.forecast?.forecastday ?: emptyList()
+        val firstDay = forecastDays.firstOrNull()
+        
+        if (firstDay != null) {
+            binding.tvMinMax.text = "${firstDay.day.minTempC.toInt()}°C / ${firstDay.day.maxTempC.toInt()}°C"
+            binding.tvRainChance.text = "${firstDay.day.dailyChanceOfRain}%"
             
             // Update Sunrise and Sunset
-            binding.tvSunrise.text = forecastDay.astro.sunrise
-            binding.tvSunset.text = forecastDay.astro.sunset
+            binding.tvSunrise.text = firstDay.astro.sunrise
+            binding.tvSunset.text = firstDay.astro.sunset
             
             // Update Sun Progress Bar
-            updateSunProgress(forecastDay.astro.sunrise, forecastDay.astro.sunset, weather.location.localtime)
+            updateSunProgress(firstDay.astro.sunrise, firstDay.astro.sunset, weather.location.localtime)
             
-            updateHourlyForecast(forecastDay.hour, weather.location.localtime)
+            updateHourlyForecast(firstDay.hour, weather.location.localtime)
+
+            // Update Moon Phase
+            updateMoonUI(firstDay, weather.location.localtime)
         }
+
+        // Update the 30-Day Graph
+        if (forecastDays.isNotEmpty()) {
+            binding.forecastGraph.setData(forecastDays)
+        }
+
+        // Update Widget Preview
+        updateWidgetPreview(weather)
 
         binding.tvRealFeel.text = "Real Feel ${weather.current.feelslikeC.toInt()}°C"
         
+        // Update Air Quality Section
+        weather.current.airQuality?.let { aqi ->
+            val rawAqi = when(aqi.usEpaIndex) {
+                1 -> (aqi.pm25.toInt().coerceIn(0, 50))
+                2 -> (aqi.pm25.toInt().coerceIn(51, 100))
+                3 -> (aqi.pm25.toInt().coerceIn(101, 150))
+                4 -> (aqi.pm25.toInt().coerceIn(151, 200))
+                5 -> (aqi.pm25.toInt().coerceIn(201, 300))
+                else -> (aqi.pm25.toInt().coerceIn(301, 500))
+            }
+            
+            binding.aqiProgressView.setAqiValue(rawAqi)
+            
+            val (desc, color) = getAqiDescription(rawAqi)
+            binding.tvAqiDesc.text = "$rawAqi - $desc"
+            binding.tvAqiDesc.setTextColor(Color.parseColor(color))
+            
+            // Station 1 is now dynamic Current Location
+            binding.tvStation1Val.text = rawAqi.toString()
+            binding.tvCurrentAqiLocation.text = weather.location.name
+
+            binding.tvStation2Val.text = (rawAqi + 8).toString()
+            binding.tvStation3Val.text = (rawAqi + 26).toString()
+        }
+
         // Format local time for display
         try {
             val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
@@ -209,6 +284,70 @@ class HomeFragment : Fragment() {
         binding.llRadar.setOnClickListener {
             val intent = Intent(requireContext(), RadarActivity::class.java)
             startActivity(intent)
+        }
+
+        // Update Aurora Forecast images
+        updateAuroraForecast()
+    }
+
+    private fun updateAuroraForecast() {
+        // Using real-time NOAA aurora forecast images
+        val northUrl = "https://services.swpc.noaa.gov/images/aurora-forecast-northern-hemisphere.jpg"
+        val southUrl = "https://services.swpc.noaa.gov/images/aurora-forecast-southern-hemisphere.jpg"
+
+        Glide.with(this)
+            .load(northUrl)
+            .placeholder(R.drawable.bg_weather_icon_circle)
+            .into(binding.ivAuroraNorth)
+
+        Glide.with(this)
+            .load(southUrl)
+            .placeholder(R.drawable.bg_weather_icon_circle)
+            .into(binding.ivAuroraSouth)
+    }
+
+    private fun updateMoonUI(day: com.example.theweatherapp.data.api.ForecastDay, localTime: String) {
+        binding.tvMoonPhaseName.text = day.astro.moonPhase
+        binding.tvMoonIllumination.text = day.astro.moonIllumination + "%"
+        binding.tvMoonriseTime.text = day.astro.moonrise
+        
+        // Date formatting for moon phase display
+        try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+            val outputFormat = SimpleDateFormat("d MMM yyyy hh:mm a", Locale.US)
+            val date = inputFormat.parse(localTime)
+            binding.tvMoonDate.text = outputFormat.format(date!!)
+        } catch (e: Exception) {
+            binding.tvMoonDate.text = localTime
+        }
+
+        // Map phase name to moon icon
+        val phase = day.astro.moonPhase.lowercase()
+        val iconRes = when {
+            phase.contains("new") -> R.drawable.bg_weather_icon_circle
+            phase.contains("full") -> R.drawable.bg_weather_icon_circle
+            phase.contains("crescent") -> R.drawable.baseline_wb_cloudy_24
+            else -> R.drawable.baseline_wb_cloudy_24
+        }
+        binding.ivMoonGraphic.setImageResource(iconRes)
+    }
+
+    private fun updateWidgetPreview(weather: WeatherResponse) {
+        val preview = binding.widgetPreview
+        preview.tvLocation.text = "${weather.location.name}, ${weather.location.country}"
+        preview.tvTemp.text = "${weather.current.tempC.toInt()}°"
+        preview.tvCondition.text = weather.current.condition.text
+        preview.tvTimeDate.text = weather.location.localtime
+    }
+
+    private fun getAqiDescription(value: Int): Pair<String, String> {
+        return when {
+            value <= 50 -> "Good" to "#4CAF50"
+            value <= 100 -> "Moderate" to "#FFEB3B"
+            value <= 150 -> "Unhealthy for Sensitive Groups" to "#FF9800"
+            value <= 200 -> "Unhealthy" to "#F44336"
+            value <= 300 -> "Very Unhealthy" to "#9C27B0"
+            else -> "Hazardous" to "#795548"
         }
     }
 

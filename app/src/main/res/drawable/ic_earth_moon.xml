@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Dark Space/Background -->
+    <path
+        android:fillColor="#1A237E"
+        android:pathData="M60,60m-50,0a50,50 0,1 1,100 0a50,50 0,1 1,-100 0" />
+
+    <!-- Earth/Planet Base -->
+    <path
+        android:fillColor="#283593"
+        android:pathData="M60,60m-45,0a45,45 0,1 1,90 0a45,45 0,1 1,-90 0" />
+
+    <!-- Craters/Surface Detail -->
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M45,40m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0" />
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M80,50m-12,0a12,12 0,1 1,24 0a12,12 0,1 1,-24 0" />
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M55,80m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0" />
+    <path
+        android:fillColor="#3949AB"
+        android:pathData="M90,85m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0" />
+
+</vector>
