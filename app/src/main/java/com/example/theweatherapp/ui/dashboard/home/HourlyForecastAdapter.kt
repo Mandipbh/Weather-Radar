@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.theweatherapp.R
 import com.example.theweatherapp.ui.dashboard.home.model.HourlyData
 
@@ -14,10 +15,11 @@ class HourlyForecastAdapter(
 ) : RecyclerView.Adapter<HourlyForecastAdapter.HourlyViewHolder>() {
 
     inner class HourlyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvTime: TextView   = view.findViewById(R.id.tv_hour_time)
-        val ivIcon: ImageView  = view.findViewById(R.id.iv_hour_icon)
-        val tvTemp: TextView   = view.findViewById(R.id.tv_hour_temp)
-        val tvRain: TextView   = view.findViewById(R.id.tv_hour_rain)
+        val tvTime: TextView = view.findViewById(R.id.tv_hour_time)
+        val ivIcon: ImageView = view.findViewById(R.id.iv_hour_icon)
+        val lottieIcon: LottieAnimationView = view.findViewById(R.id.lottie_hour_icon)
+        val tvTemp: TextView = view.findViewById(R.id.tv_hour_temp)
+        val tvRain: TextView = view.findViewById(R.id.tv_hour_rain)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -32,14 +34,18 @@ class HourlyForecastAdapter(
         h.tvTemp.text = "${d.tempC}°"
         h.tvRain.text = "${d.rainPercent}%"
 
-        // Set appropriate icon
-        val iconRes = when (d.iconType) {
-            "sunny"  -> R.drawable.ic_sunrise
-            "clear"  -> R.drawable.ic_star_filled
-            "partly" -> R.drawable.ic_sunrise
-            else     -> R.drawable.ic_cloudy
+        // Set appropriate Lottie animation
+        val lottieRes = when {
+            d.iconType.contains("sunny") || d.iconType.contains("clear") -> R.raw.sunny
+            else -> R.raw.cloud
         }
-        h.ivIcon.setImageResource(iconRes)
+        
+        h.lottieIcon.setAnimation(lottieRes)
+        h.lottieIcon.playAnimation()
+        
+        // Hide static icon
+        h.ivIcon.visibility = View.GONE
+        h.lottieIcon.visibility = View.VISIBLE
 
         // Highlight "Now"
         h.itemView.isSelected = position == 0
@@ -47,4 +53,3 @@ class HourlyForecastAdapter(
 
     override fun getItemCount() = hours.size
 }
-

@@ -17,11 +17,35 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Size Optimization: Keep only necessary resources
+        resourceConfigurations += "en"
+        
+        ndk {
+            // Size Optimization: Only include common ABIs (Mapbox is large, this helps significantly)
+            abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a"))
+        }
+    }
+
+    signingConfigs {
+        create("release") {
+            // NOTE: You must generate this file in the 'app' folder using the command:
+            // keytool -genkey -v -keystore release-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias release-key
+            storeFile = file("release-keystore.jks")
+            storePassword = "password123"
+            keyAlias = "release-key"
+            keyPassword = "password123"
+        }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // Size Optimization: Enable R8 obfuscation and resource shrinking
+            isMinifyEnabled = true
+            isShrinkResources = true
+            
+            signingConfig = signingConfigs.getByName("release")
+            
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -37,6 +61,13 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+    
+    // Size Optimization: Enable splits for APKs if not using App Bundle
+    bundle {
+        language { enableSplit = true }
+        density { enableSplit = true }
+        abi { enableSplit = true }
     }
 }
 
@@ -78,6 +109,9 @@ dependencies {
 
     //mapbox
     implementation("com.mapbox.maps:android-ndk27:11.21.0")
+
+    // Lottie
+    implementation(libs.lottie)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

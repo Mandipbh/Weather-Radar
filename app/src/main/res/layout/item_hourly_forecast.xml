@@ -18,12 +18,25 @@
         android:textSize="13sp"
         android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/iv_hour_icon"
+    <FrameLayout
         android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:padding="5dp"
-        android:src="@drawable/ic_cloudy" />
+        android:layout_height="37dp">
+
+        <ImageView
+            android:id="@+id/iv_hour_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_cloudy" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_hour_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

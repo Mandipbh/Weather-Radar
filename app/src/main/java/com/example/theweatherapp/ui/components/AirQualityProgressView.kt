@@ -1,15 +1,18 @@
 package com.example.theweatherapp.ui.components
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 
 class AirQualityProgressView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
     private var aqiValue: Int = 0
+    private var animatedValue: Float = 0f
     private val barHeight = 20f
     private val indicatorRadius = 15f
     private val bubbleRadius = 40f
@@ -17,7 +20,6 @@ class AirQualityProgressView @JvmOverloads constructor(
 
     private val barPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val indicatorPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.parseColor("#FFD700")
         style = Paint.Style.FILL
     }
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -42,10 +44,24 @@ class AirQualityProgressView @JvmOverloads constructor(
     )
 
     private val scale = floatArrayOf(0f, 50f, 100f, 150f, 200f, 300f, 500f)
+    private var animator: ValueAnimator? = null
 
     fun setAqiValue(value: Int) {
-        this.aqiValue = value
-        invalidate()
+        val startValue = animatedValue
+        val endValue = value.toFloat()
+        
+        animator?.cancel()
+        animator = ValueAnimator.ofFloat(startValue, endValue).apply {
+            duration = 1500
+            interpolator = DecelerateInterpolator()
+            addUpdateListener {
+                val value = it.animatedValue as Float
+                this@AirQualityProgressView.animatedValue = value
+                this@AirQualityProgressView.aqiValue = value.toInt()
+                invalidate()
+            }
+            start()
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -64,13 +80,13 @@ class AirQualityProgressView @JvmOverloads constructor(
         val rectF = RectF(padding, centerY - barHeight / 2, width - padding, centerY + barHeight / 2)
         canvas.drawRoundRect(rectF, barHeight / 2, barHeight / 2, barPaint)
 
-        // Calculate Indicator Position
-        val position = calculatePosition(aqiValue, availableWidth)
+        // Calculate Indicator Position using animatedValue
+        val position = calculatePosition(animatedValue.toInt(), availableWidth)
         val indicatorX = padding + position
 
         // Draw Bubble
         val bubbleY = centerY - barHeight - bubbleMargin - bubbleRadius
-        indicatorPaint.color = getColorForAqi(aqiValue)
+        indicatorPaint.color = getColorForAqi(animatedValue.toInt())
         canvas.drawCircle(indicatorX, bubbleY, bubbleRadius, indicatorPaint)
         
         // Draw Triangle below bubble
