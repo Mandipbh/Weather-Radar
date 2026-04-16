@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.abs
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -320,6 +321,27 @@ class HomeFragment : Fragment() {
 
     private fun updateAuroraUI(weather: WeatherResponse) {
         val currentBinding = _binding ?: return
+        
+        // Calculate Aurora probability based on latitude and Kp-index
+        // Using a mock Kp-index as real-time solar data usually requires a specialized API (like NOAA SWPC)
+        val mockKpIndex = 1.33 + (abs(System.currentTimeMillis() % 100) / 50.0)
+        val latitude = weather.location.lat
+        
+        val probability = calculateAuroraProbability(latitude, mockKpIndex)
+        val visibilityStatus = when {
+            probability > 60 -> "High"
+            probability > 20 -> "Medium"
+            else -> "Low"
+        }
+
+        currentBinding.tvAuroraVisibility.text = "Visibility: $visibilityStatus"
+        currentBinding.tvAuroraChance.text = "Chance: ${probability.toInt()}%"
+        currentBinding.tvAuroraKpIndex.text = String.format(Locale.US, "Kp Index: %.2f", mockKpIndex)
+        
+        // Update animation speed based on probability
+        currentBinding.lottieAurora.speed = (probability / 50.0).toFloat().coerceIn(0.5f, 2.0f)
+
+        // Load hemisphere images
         val northUrl = "https://services.swpc.noaa.gov/images/animations/ovation/north/latest.jpg"
         val southUrl = "https://services.swpc.noaa.gov/images/animations/ovation/south/latest.jpg"
 
@@ -332,6 +354,15 @@ class HomeFragment : Fragment() {
             .load(southUrl)
             .placeholder(R.drawable.bg_weather_icon_circle)
             .into(currentBinding.ivAuroraSouth)
+    }
+
+    private fun calculateAuroraProbability(lat: Double, kp: Double): Double {
+        // Simple formula: Aurora is more visible at high latitudes and high Kp indices
+        val absLat = abs(lat)
+        val latFactor = (absLat - 40.0).coerceIn(0.0, 50.0) / 50.0 // 0 at 40 deg, 1 at 90 deg
+        val kpFactor = (kp / 9.0).coerceIn(0.0, 1.0)
+        
+        return (latFactor * 0.7 + kpFactor * 0.3) * 100.0
     }
 
     private fun updateMoonUI(day: com.example.theweatherapp.data.api.ForecastDay, localTime: String, timeFormat: String) {
@@ -449,8 +480,8 @@ class HomeFragment : Fragment() {
                     hourOfDay
                 } else {
                     try {
-                        val sdf24 = SimpleDateFormat("HH:mm", Locale.US)
                         val sdf12 = SimpleDateFormat("h a", Locale.US)
+                        val sdf24 = SimpleDateFormat("HH:mm", Locale.US)
                         val date = sdf24.parse(hourOfDay)
                         if (date != null) sdf12.format(date) else hourOfDay
                     } catch (e: Exception) {

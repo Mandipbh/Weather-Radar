@@ -3,11 +3,14 @@ package com.example.theweatherapp.ui.dashboard.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.theweatherapp.R
 import com.example.theweatherapp.data.api.WeatherResponse
 import com.example.theweatherapp.ui.dashboard.customise.model.WidgetType
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class HomeWidgetsAdapter(
     private val types: List<WidgetType> = listOf(WidgetType.DETAILED, WidgetType.LARGE_TEMP, WidgetType.LARGE_TIME)
@@ -52,6 +55,34 @@ class HomeWidgetsAdapter(
                 holder.tvTemp.text = "$temp$tempUnit"
                 holder.tvCondition.text = weather.current.condition.text
                 holder.tvTimeDate.text = weather.location.localtime
+                
+                holder.tvUvHumidity.text = "UV Index: ${weather.current.airQuality?.usEpaIndex ?: 0}\nHumidity: ${weather.current.humidity}%"
+                val forecast = weather.forecast?.forecastday?.firstOrNull()?.day
+                val minT = if (isCelsius) forecast?.minTempC?.toInt() else forecast?.minTempF?.toInt()
+                val maxT = if (isCelsius) forecast?.maxTempC?.toInt() else forecast?.maxTempF?.toInt()
+                holder.tvMinMaxPrecip.text = "Min: $minT$tempUnit Max: $maxT$tempUnit\nPrecipitation: ${weather.current.precipMm} mm"
+
+                // Hourly Forecast
+                val localTime = weather.location.localtime
+                val currentHourStr = try {
+                    val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
+                    val date = sdf.parse(localTime)
+                    SimpleDateFormat("HH", Locale.getDefault()).format(date!!)
+                } catch (e: Exception) { "00" }
+
+                val hours = weather.forecast?.forecastday?.firstOrNull()?.hour ?: emptyList()
+                val upcomingHours = hours.filter { it.time.split(" ").last().split(":").first() >= currentHourStr }
+                
+                val forecastViews = listOf(holder.item1, holder.item2, holder.item3, holder.item4, holder.item5, holder.item6)
+                forecastViews.forEachIndexed { index, view ->
+                    if (index < upcomingHours.size) {
+                        val hourData = upcomingHours[index]
+                        view.findViewById<TextView>(R.id.tv_mini_time).text = if (index == 0) "Now" else hourData.time.split(" ").last()
+                        view.findViewById<TextView>(R.id.tv_mini_temp).text = "${if (isCelsius) hourData.tempC.toInt() else hourData.tempF.toInt()}°"
+                        view.findViewById<TextView>(R.id.tv_mini_rain).text = "${hourData.chanceOfRain}%"
+                        view.visibility = View.VISIBLE
+                    } else view.visibility = View.INVISIBLE
+                }
             }
             is LargeTempViewHolder -> {
                 holder.tvLocation.text = "${weather.location.name}, ${weather.location.country}"
@@ -86,6 +117,14 @@ class HomeWidgetsAdapter(
         val tvTemp: TextView = view.findViewById(R.id.tv_temp)
         val tvCondition: TextView = view.findViewById(R.id.tv_condition)
         val tvTimeDate: TextView = view.findViewById(R.id.tv_time_date)
+        val tvUvHumidity: TextView = view.findViewById(R.id.tv_uv_humidity)
+        val tvMinMaxPrecip: TextView = view.findViewById(R.id.tv_min_max_precip)
+        val item1: View = view.findViewById(R.id.item_1)
+        val item2: View = view.findViewById(R.id.item_2)
+        val item3: View = view.findViewById(R.id.item_3)
+        val item4: View = view.findViewById(R.id.item_4)
+        val item5: View = view.findViewById(R.id.item_5)
+        val item6: View = view.findViewById(R.id.item_6)
     }
 
     class LargeTempViewHolder(view: View) : RecyclerView.ViewHolder(view) {
