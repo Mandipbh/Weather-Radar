@@ -184,11 +184,15 @@ class HomeFragment : Fragment() {
             Toast.makeText(requireContext(), "Opening customisation...", Toast.LENGTH_SHORT).show()
         }
 
-        currentBinding.btnRadar.setOnClickListener {
+        currentBinding.btnRadarSmall.setOnClickListener {
             startActivity(Intent(requireContext(), RadarActivity::class.java))
         }
 
-        currentBinding.llRadar.setOnClickListener {
+        currentBinding.llRadarBanner.setOnClickListener {
+            startActivity(Intent(requireContext(), RadarActivity::class.java))
+        }
+        
+        currentBinding.flRadarPreview.setOnClickListener {
             startActivity(Intent(requireContext(), RadarActivity::class.java))
         }
 
@@ -265,6 +269,9 @@ class HomeFragment : Fragment() {
             updateSunProgress(firstDay.astro.sunrise, firstDay.astro.sunset, weather.location.localtime)
             updateHourlyForecast(firstDay.hour, weather.location.localtime, isCelsius, timeFormat)
             updateMoonUI(firstDay, weather.location.localtime, timeFormat)
+            updateUVUI(weather.current.uv)
+            updateWindUI(weather)
+            updateDetailsGrid(weather, firstDay, isCelsius, tempUnit, timeFormat)
         }
 
         if (forecastDays.isNotEmpty()) {
@@ -299,7 +306,80 @@ class HomeFragment : Fragment() {
             currentBinding.tvStation3Val.text = (rawAqi + 26).toString()
         }
 
+        updateRadarPreview(weather)
         updateAuroraUI(weather)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun updateDetailsGrid(
+        weather: WeatherResponse,
+        firstDay: com.example.theweatherapp.data.api.ForecastDay,
+        isCelsius: Boolean,
+        tempUnit: String,
+        timeFormat: String
+    ) {
+        val currentBinding = _binding ?: return
+        val context = context ?: return
+
+        // Wind Speed and Unit
+        val windUnitString = PrefManager.getWind(context).ifEmpty { getString(R.string.kmh) }
+        val windSpeed = when (windUnitString) {
+            getString(R.string.mih) -> weather.current.windMph
+            getString(R.string.ms) -> weather.current.windKph / 3.6
+            else -> weather.current.windKph
+        }
+        currentBinding.tvGridWindSpeed.text = String.format(Locale.US, "%.2f", windSpeed)
+        currentBinding.tvGridWindUnit.text = windUnitString
+
+        // Wind Direction
+        currentBinding.tvGridWindDir.text = weather.current.windDir
+
+        // Feels Like
+        val feelsLike = if (isCelsius) weather.current.feelslikeC.toInt() else weather.current.feelslikeF.toInt()
+        currentBinding.tvGridFeelsLike.text = "$feelsLike$tempUnit"
+
+        // Cloud Cover
+        currentBinding.tvGridCloudCover.text = "${weather.current.cloud}%"
+
+        // Pressure
+        currentBinding.tvGridPressure.text = weather.current.pressureMb.toInt().toString()
+
+        // Sunrise and Sunset
+        currentBinding.tvGridSunrise.text = formatTime(firstDay.astro.sunrise, timeFormat)
+        currentBinding.tvGridSunset.text = formatTime(firstDay.astro.sunset, timeFormat)
+
+        // Precipitation
+        val precipUnit = PrefManager.getPrecip(context).ifEmpty { getString(R.string.mm) }
+        val precipValue = if (precipUnit == getString(R.string.`in`)) weather.current.precipIn else weather.current.precipMm
+        currentBinding.tvGridPrecip.text = String.format(Locale.US, "%.2f %s", precipValue, precipUnit)
+
+        // Humidity
+        currentBinding.tvGridHumidity.text = "${weather.current.humidity}%"
+        
+        // Dew Point estimation from first hour if available
+        val dewPoint = if (isCelsius) {
+            firstDay.hour.firstOrNull()?.dewpointC?.toInt() ?: 0
+        } else {
+            firstDay.hour.firstOrNull()?.dewpointF?.toInt() ?: 0
+        }
+        currentBinding.tvGridDewPoint.text = "The dew point is $dewPoint$tempUnit right now"
+
+        // Chance of Rain
+        currentBinding.tvGridChanceRain.text = "${firstDay.day.dailyChanceOfRain}%"
+    }
+
+    private fun updateRadarPreview(weather: WeatherResponse) {
+        val currentBinding = _binding ?: return
+        
+        // Static map preview URL using OpenWeatherMap tiles for the current location
+        // We load a high-quality radar banner as a base and overlay the Lottie animation
+        
+        Glide.with(this)
+            .load(R.drawable.bg_radar_banner)
+            .placeholder(R.drawable.bg_weather_icon_circle)
+            .into(currentBinding.ivRadarPreview)
+            
+        // The Lottie animation 'lottie_radar_scan' is auto-playing in XML
     }
 
     private fun formatTime(timeStr: String, timeFormat: String): String {
@@ -386,6 +466,49 @@ class HomeFragment : Fragment() {
 
         currentBinding.lottieMoonGraphic.setAnimation(R.raw.moon)
         currentBinding.lottieMoonGraphic.playAnimation()
+    }
+
+    private fun updateUVUI(uv: Double) {
+        val currentBinding = _binding ?: return
+        val uvInt = uv.toInt()
+        currentBinding.tvUvIndexValue.text = uvInt.toString()
+        
+        val (desc, color, recommendation) = when {
+            uvInt <= 2 -> Triple("Low", "#4CAF50", "Use sun protection from 9:00 AM to 4:00 PM.")
+            uvInt <= 5 -> Triple("Moderate", "#FFEB3B", "Wear a hat and sunglasses. Use SPF 30+ sunscreen.")
+            uvInt <= 7 -> Triple("High", "#FF9800", "Seek shade during midday hours. Apply sunscreen frequently.")
+            uvInt <= 10 -> Triple("Very High", "#F44336", "Avoid being outdoors during midday. Wear protective clothing.")
+            else -> Triple("Extreme", "#9C27B0", "Stay indoors as much as possible. Take all precautions.")
+        }
+        
+        currentBinding.tvUvIndexDesc.text = desc
+        currentBinding.tvUvIndexDesc.setTextColor(Color.parseColor(color))
+        currentBinding.viewUvIndicator.backgroundTintList = android.content.res.ColorStateList.valueOf(Color.parseColor(color))
+        currentBinding.tvUvRecommendation.text = recommendation
+    }
+
+    private fun updateWindUI(weather: WeatherResponse) {
+        val currentBinding = _binding ?: return
+        val context = context ?: return
+        
+        val windUnit = PrefManager.getWind(context).ifEmpty { getString(R.string.kmh) }
+        val windSpeed = when (windUnit) {
+            getString(R.string.mih) -> weather.current.windMph
+            getString(R.string.ms) -> weather.current.windKph / 3.6
+            else -> weather.current.windKph
+        }
+
+        currentBinding.tvWindSpeedValue.text = String.format(Locale.US, "%.1f", windSpeed)
+        currentBinding.tvWindUnit.text = windUnit
+        currentBinding.tvWindDirection.text = "${weather.current.windDir} (${weather.current.windDegree}°)"
+        
+        // Update Wind Direction Card
+        currentBinding.tvWindDirectionDegree.text = "${weather.current.windDegree}°"
+        currentBinding.ivWindDirectionArrow.rotation = weather.current.windDegree.toFloat() + 90f // Base arrow points right (E)
+
+        // Rotate the wind animation based on direction if possible, or just play it
+        currentBinding.lottieWind.setAnimation(R.raw.weather_bg) // Reusing weather_bg or use a specific wind raw if available
+        currentBinding.lottieWind.playAnimation()
     }
 
     private fun getAqiDescription(value: Int): Pair<String, String> {
