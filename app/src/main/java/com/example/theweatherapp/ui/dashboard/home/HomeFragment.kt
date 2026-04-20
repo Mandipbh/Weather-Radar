@@ -498,17 +498,7 @@ class HomeFragment : Fragment() {
             else -> weather.current.windKph
         }
 
-        currentBinding.tvWindSpeedValue.text = String.format(Locale.US, "%.1f", windSpeed)
-        currentBinding.tvWindUnit.text = windUnit
-        currentBinding.tvWindDirection.text = "${weather.current.windDir} (${weather.current.windDegree}°)"
-        
-        // Update Wind Direction Card
-        currentBinding.tvWindDirectionDegree.text = "${weather.current.windDegree}°"
-        currentBinding.ivWindDirectionArrow.rotation = weather.current.windDegree.toFloat() + 90f // Base arrow points right (E)
 
-        // Rotate the wind animation based on direction if possible, or just play it
-        currentBinding.lottieWind.setAnimation(R.raw.weather_bg) // Reusing weather_bg or use a specific wind raw if available
-        currentBinding.lottieWind.playAnimation()
     }
 
     private fun getAqiDescription(value: Int): Pair<String, String> {
